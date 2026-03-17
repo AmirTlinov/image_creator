@@ -1,0 +1,200 @@
+{
+  "ok": true,
+  "error": null,
+  "repo_root": "/media/amir/documents/projects/mcp/image_creator",
+  "kind": "ci_fast",
+  "validate": {
+    "ok": true,
+    "error": null,
+    "schema_version": "4",
+    "repo_root": "/media/amir/documents/projects/mcp/image_creator",
+    "mode": "ratchet",
+    "violations": [],
+    "findings_v2": [],
+    "suppressed": [],
+    "loc": {
+      "files_scanned": 39,
+      "max_loc": 74,
+      "worst_path": "src/image_creator/providers/openrouter.py"
+    },
+    "boundary": null,
+    "public_surface": null,
+    "effective_config": null,
+    "risk_summary": {
+      "findings_total": 0,
+      "by_category": {},
+      "by_severity": {}
+    },
+    "coverage": {
+      "catalog_total": 10,
+      "catalog_covered": 7,
+      "percent": 70.0,
+      "covered_modes": [
+        "dependency_hygiene",
+        "god_module_cycles",
+        "knowledge_continuity",
+        "policy_theater",
+        "resilience_defaults",
+        "security_baseline",
+        "unplugged_iron"
+      ],
+      "uncovered_modes": [
+        "fail_open",
+        "env_sprawl",
+        "public_surface_bloat"
+      ],
+      "effective_covered_modes": [
+        "dependency_hygiene",
+        "god_module_cycles",
+        "knowledge_continuity",
+        "policy_theater",
+        "resilience_defaults",
+        "security_baseline",
+        "unplugged_iron"
+      ],
+      "declared_but_ineffective_modes": []
+    },
+    "trust_score": {
+      "score": 100,
+      "grade": "A",
+      "weights": {
+        "critical": 25,
+        "high": 10,
+        "medium": 4,
+        "low": 1
+      },
+      "coverage_penalty": 0
+    },
+    "verdict": {
+      "decision": {
+        "status": "pass",
+        "reasons": [],
+        "blocking_count": 0,
+        "observation_count": 0
+      },
+      "quality_posture": {
+        "trust_score": 100,
+        "trust_grade": "A",
+        "coverage_covered": 7,
+        "coverage_total": 10,
+        "weighted_risk": 0,
+        "findings_total": 0,
+        "risk_by_severity": {}
+      },
+      "suppressed_count": 0,
+      "suppressed_codes": []
+    },
+    "quality_posture": {
+      "trust_score": 100,
+      "trust_grade": "A",
+      "coverage_covered": 7,
+      "coverage_total": 10,
+      "weighted_risk": 0,
+      "findings_total": 0,
+      "risk_by_severity": {}
+    },
+    "agent_digest": {
+      "top_blockers": [],
+      "root_causes": [],
+      "minimal_fix_steps": [],
+      "confidence": "high",
+      "suppressed_count": 0,
+      "suppressed_top_codes": []
+    },
+    "summary_md": null,
+    "change_context": {
+      "change_id": null,
+      "head_sha": null,
+      "base_ref": "origin/main",
+      "base_sha": null,
+      "merge_base_sha": null,
+      "quality_contract_hash": "sha256:9372676c22b7b72e294c524f003fde7bd74ed8de36ceb71647f3ed4e800a8034"
+    },
+    "evidence": {
+      "status": "pass",
+      "blocking": false,
+      "findings": [],
+      "summary": {
+        "compact": "validate status=pass; mode=Ratchet; violations=0; suppressed=0",
+        "top_findings": []
+      },
+      "artifacts": [],
+      "remediation": [
+        "keep current quality bars and continue with gate."
+      ],
+      "cost_class": "low",
+      "evidence_ref": "validate:/media/amir/documents/projects/mcp/image_creator:Ratchet"
+    },
+    "payload_meta": null
+  },
+  "receipts": [
+    {
+      "tool_id": "python-pytest",
+      "success": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "duration_ms": 418,
+      "command": "uv",
+      "args": [
+        "run",
+        "pytest"
+      ],
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.11.14, pytest-8.4.2, pluggy-1.6.0\nrootdir: /media/amir/documents/projects/mcp/image_creator\nconfigfile: pyproject.toml\ntestpaths: tests\nplugins: anyio-4.12.1\ncollected 10 items\n\ntests/test_provider_gemini.py ..                                         [ 20%]\ntests/test_provider_openrouter.py ....                                   [ 60%]\ntests/test_server.py .                                                   [ 70%]\ntests/test_service.py .                                                  [ 80%]\ntests/test_storage.py ..                                                 [100%]\n\n============================== 10 passed in 0.22s ==============================\n",
+      "stderr_tail": "",
+      "stdout_bytes": 768,
+      "stderr_bytes": 0,
+      "stdout_sha256": "dae8ae6cdf9d24c38d0c2694f977e797b5a6e683123b9daee95655de8cc6bb45",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "structured_report": null
+    }
+  ],
+  "witness_path": ".agents/mcp/compas/witness/gate_ci_fast.json",
+  "witness": null,
+  "change_context": {
+    "change_id": null,
+    "head_sha": null,
+    "base_ref": "origin/main",
+    "base_sha": null,
+    "merge_base_sha": null,
+    "quality_contract_hash": "sha256:9372676c22b7b72e294c524f003fde7bd74ed8de36ceb71647f3ed4e800a8034"
+  },
+  "verdict": {
+    "decision": {
+      "status": "pass",
+      "reasons": [],
+      "blocking_count": 0,
+      "observation_count": 0
+    },
+    "quality_posture": null,
+    "suppressed_count": 0,
+    "suppressed_codes": []
+  },
+  "agent_digest": {
+    "top_blockers": [],
+    "root_causes": [],
+    "minimal_fix_steps": [],
+    "confidence": "high",
+    "suppressed_count": 0,
+    "suppressed_top_codes": []
+  },
+  "summary_md": null,
+  "evidence": {
+    "status": "pass",
+    "blocking": false,
+    "findings": [],
+    "summary": {
+      "compact": "gate status=pass; kind=ci_fast; receipts=1; validate_violations=0",
+      "top_findings": []
+    },
+    "artifacts": [],
+    "remediation": [
+      "gate passed; continue delivery."
+    ],
+    "cost_class": "low",
+    "evidence_ref": "gate:ci_fast:/media/amir/documents/projects/mcp/image_creator"
+  },
+  "payload_meta": null,
+  "job": null,
+  "job_state": null,
+  "job_error": null
+}

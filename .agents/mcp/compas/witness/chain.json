@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "gate_kind": "ci_fast",
+      "timestamp": "2026-03-17T23:24:24.882639824+00:00",
+      "witness_sha256": "566346bac7926990a024f0f776669b1be2773a4d2a6ba5653533e54af0edbffe",
+      "prev_hash": "genesis",
+      "entry_hash": "4f197e69897f4435cc07aabd6f5c3d4765cd0c68c213e0067ff9714f91ff4493",
+      "ok": false
+    },
+    {
+      "gate_kind": "ci_fast",
+      "timestamp": "2026-03-17T23:24:40.081748108+00:00",
+      "witness_sha256": "045e77090f87b75eb0a9b2797e28f9f9a60df5caf1ec8b274b799042b6be832f",
+      "prev_hash": "4f197e69897f4435cc07aabd6f5c3d4765cd0c68c213e0067ff9714f91ff4493",
+      "entry_hash": "33dd743b496f929cd77f07049493bbf5d8b63f99ae8e154817f97d3b01621795",
+      "ok": true
+    },
+    {
+      "gate_kind": "ci_fast",
+      "timestamp": "2026-03-17T23:35:45.228527373+00:00",
+      "witness_sha256": "5c65d174ef3d02a3bee71c365b31c062efb347fd5aaeed33bd180ca5656f185c",
+      "prev_hash": "33dd743b496f929cd77f07049493bbf5d8b63f99ae8e154817f97d3b01621795",
+      "entry_hash": "af7504bcfc719e23082cbbc9f716aa44820651bde8bd846a8388777527d2d697",
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+[tool]
+id = "python-pytest"
+description = "uv run pytest"
+command = "uv"
+args = ["run", "pytest"]
+mutability = "read_only"
+compatible_gate_kinds = ["ci", "ci_fast", "flagship"]
+evidence_kinds = []
+
+[tool.env]

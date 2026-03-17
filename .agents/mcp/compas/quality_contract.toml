@@ -1,0 +1,58 @@
+# Compas Sentinel v1 — quality policy contract
+
+[quality]
+min_trust_score = 60
+allow_trust_drop = false
+allow_coverage_drop = false
+max_weighted_risk_increase = 0
+
+[exceptions]
+max_exceptions = 10
+max_suppressed_ratio = 0.30
+max_exception_window_days = 90
+
+[receipt_defaults]
+min_duration_ms = 100
+min_stdout_bytes = 10
+
+[governance]
+mandatory_checks = ["supply_chain", "loc", "tool_budget"]
+mandatory_failure_modes = []
+min_failure_modes = 1
+
+[proof]
+require_witness = true
+
+[change]
+root_path = "docs/changes"
+projection_root = ".agents/mcp/compas/projections"
+required_sections = ["intent", "done_criteria", "non_goals", "rollback"]
+
+[review_matrix]
+low = []
+medium = ["architecture", "evidence"]
+high = ["architecture", "evidence", "simplicity"]
+
+[leases]
+max_write_leases_per_path = 1
+allow_read_overlap = true
+
+[docs]
+router_max_non_empty_lines = 60
+stale_after_days = 30
+index_path = "docs/index.md"
+
+[context_budget]
+max_linked_references = 12
+max_total_injected_bytes = 48000
+max_active_changes_per_context = 5
+max_optional_projections = 4
+enforce = false
+
+[baseline]
+snapshot_path = ".agents/mcp/compas/baselines/quality_snapshot.json"
+max_scope_narrowing = 0.10
+
+[impact]
+diff_base = "merge-base:origin/main"
+unmapped_path_policy = "block"
