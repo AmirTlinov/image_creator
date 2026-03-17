@@ -10,9 +10,9 @@ mode = "allowlist"
 allow_commands = ["uv"]
 
 [gate]
-ci_fast = ["python-pytest"]
-ci = ["python-pytest"]
-flagship = ["python-pytest"]
+ci_fast = ["python-ruff", "python-mypy", "python-pytest"]
+ci = ["python-ruff", "python-mypy", "python-pytest"]
+flagship = ["python-ruff", "python-mypy", "python-pytest"]
 
 [checks]
 env_registry = []

@@ -25,6 +25,7 @@ make smoke-live
 ```
 
 Expected result: JSON with `path`, `mime_type`, `provider`, and `model`, and a real file created under `outputs/`.
+For the MCP tool itself, the result is a structured object with those same fields.
 
 ## Example tool call
 
@@ -44,4 +45,6 @@ Use tool `generate_image` with arguments like:
 - Current default provider is `openrouter`.
 - Current proven OpenRouter default model is `google/gemini-2.5-flash-image`.
 - Old preview aliases like `google/gemini-2.5-flash-image-preview` are normalized to the working stable model.
+- `make check` runs lint + typecheck + tests + import smoke without adding a heavy CI layer.
+- Gemini code path is implemented, but still not live-proven on this machine until `GEMINI_API_KEY` is set.
 - If you change `~/.codex/config.toml` while a Codex chat is already running, restart that session before expecting the new MCP server to appear.

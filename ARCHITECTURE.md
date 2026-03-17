@@ -25,13 +25,14 @@ Turn multiple image APIs into one stable MCP tool:
 
 1. The agent-facing tool contract stays provider-agnostic.
 2. Provider payload shapes do not leak outside `providers/`.
-3. The tool returns an absolute path, not only base64 or a transient URL.
-4. File writes are centralized in `storage.py` so later edits, retention, and naming policy stay deterministic.
-5. `edit_image` should be a separate tool later, not a hidden mode that muddies the first contract.
+3. The MCP tool returns a structured result object, not a JSON string wrapper.
+4. The tool returns an absolute path, not only base64 or a transient URL.
+5. File writes are centralized in `storage.py` and must allocate collision-safe sibling names instead of overwriting by default.
+6. Provider HTTP retries and timeout handling stay inside `providers/common.py`.
+7. `edit_image` should be a separate tool later, not a hidden mode that muddies the first contract.
 
 ## Planned slices
 
-1. Gemini adapter: `generateContent` -> `inlineData`
-2. OpenRouter adapter: `/chat/completions` -> `message.images[*].image_url.url`
-3. Real smoke proof that writes one file into `outputs/`
-4. Optional `OpenAIProvider` and `edit_image` follow-up
+1. Close Gemini live proof once `GEMINI_API_KEY` is available in this environment
+2. Optional `OpenAIProvider` follow-up if it adds real value over OpenRouter + Gemini direct
+3. Optional `edit_image` as a second tool, not as a hidden mode in `generate_image`

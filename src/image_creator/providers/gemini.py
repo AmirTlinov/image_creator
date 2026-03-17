@@ -5,7 +5,7 @@ import base64
 import httpx
 
 from image_creator.contracts import ProviderImage
-from image_creator.providers.common import ProviderError, summarize_json
+from image_creator.providers.common import ProviderError, post_json_with_retries, summarize_json
 
 
 class GeminiProvider:
@@ -17,8 +17,18 @@ class GeminiProvider:
         "nano-banana": "gemini-2.5-flash-image",
     }
 
-    def __init__(self, api_key: str | None) -> None:
+    def __init__(
+        self,
+        api_key: str | None,
+        *,
+        transport: httpx.AsyncBaseTransport | None = None,
+        max_attempts: int = 3,
+        retry_delay_sec: float = 0.5,
+    ) -> None:
         self.api_key = api_key
+        self.transport = transport
+        self.max_attempts = max_attempts
+        self.retry_delay_sec = retry_delay_sec
 
     @classmethod
     def normalize_model(cls, model: str | None) -> str:
@@ -27,15 +37,21 @@ class GeminiProvider:
         return cls.model_aliases.get(model.strip(), model.strip())
 
     @staticmethod
-    def parse_generate_content_response(body: dict, model: str) -> ProviderImage:
+    def parse_generate_content_response(body: dict[str, object], model: str) -> ProviderImage:
         candidates = body.get("candidates") or []
-        if not candidates:
+        if not isinstance(candidates, list) or not candidates:
             raise ProviderError(f"Gemini response has no candidates: {summarize_json(body)}")
+        if not isinstance(candidates[0], dict):
+            raise ProviderError(f"Gemini response has invalid candidate payload: {summarize_json(body)}")
 
         parts = ((candidates[0].get("content") or {}).get("parts")) or []
+        if not isinstance(parts, list):
+            raise ProviderError(f"Gemini response has invalid parts payload: {summarize_json(body)}")
         for part in parts:
+            if not isinstance(part, dict):
+                continue
             inline_data = part.get("inlineData") or part.get("inline_data")
-            if inline_data and inline_data.get("data"):
+            if isinstance(inline_data, dict) and inline_data.get("data"):
                 mime_type = inline_data.get("mimeType") or inline_data.get("mime_type") or "image/png"
                 return ProviderImage(
                     data=base64.b64decode(inline_data["data"]),
@@ -67,24 +83,20 @@ class GeminiProvider:
         if image_config:
             generation_config["imageConfig"] = image_config
 
-        payload = {
+        payload: dict[str, object] = {
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": generation_config,
         }
 
-        async with httpx.AsyncClient(timeout=180.0) as client:
-            response = await client.post(
-                f"{self.base_url}/models/{chosen_model}:generateContent",
-                headers={
-                    "x-goog-api-key": self.api_key,
-                    "Content-Type": "application/json",
-                },
-                json=payload,
-            )
-
-        if response.is_error:
-            raise ProviderError(
-                f"Gemini request failed with HTTP {response.status_code}: {response.text[:400]}"
-            )
-
-        return self.parse_generate_content_response(response.json(), chosen_model)
+        body = await post_json_with_retries(
+            url=f"{self.base_url}/models/{chosen_model}:generateContent",
+            headers={
+                "x-goog-api-key": self.api_key,
+                "Content-Type": "application/json",
+            },
+            payload=payload,
+            transport=self.transport,
+            max_attempts=self.max_attempts,
+            retry_delay_sec=self.retry_delay_sec,
+        )
+        return self.parse_generate_content_response(body, chosen_model)

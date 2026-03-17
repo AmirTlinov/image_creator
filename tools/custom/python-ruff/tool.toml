@@ -1,0 +1,10 @@
+[tool]
+id = "python-ruff"
+description = "uv run ruff check . --show-files"
+command = "uv"
+args = ["run", "ruff", "check", ".", "--show-files"]
+mutability = "read_only"
+compatible_gate_kinds = ["ci", "ci_fast", "flagship"]
+evidence_kinds = []
+
+[tool.env]

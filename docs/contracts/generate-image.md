@@ -18,7 +18,7 @@ Give an agent one stable way to produce an image file that can be reused later i
 
 ## Success output
 
-The tool returns JSON with this shape:
+The MCP tool returns a structured object with this shape:
 
 ```json
 {
@@ -35,6 +35,7 @@ The tool returns JSON with this shape:
 - write exactly one image file for the first version
 - create the output directory if it does not exist
 - do not leave a partial final file on failure
+- if the requested `output_name` already exists, allocate a collision-safe sibling name instead of overwriting it
 - keep provider-specific HTTP and response parsing inside adapter modules
 
 ## Provider mapping notes

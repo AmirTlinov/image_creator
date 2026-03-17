@@ -18,5 +18,8 @@ class GeneratedImageResult:
     provider: str
     model: str
 
+    def to_dict(self) -> dict[str, str]:
+        return asdict(self)
+
     def to_json(self) -> str:
-        return json.dumps(asdict(self), ensure_ascii=False)
+        return json.dumps(self.to_dict(), ensure_ascii=False)

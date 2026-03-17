@@ -1,0 +1,10 @@
+[tool]
+id = "python-mypy"
+description = "uv run mypy src"
+command = "uv"
+args = ["run", "mypy", "src"]
+mutability = "read_only"
+compatible_gate_kinds = ["ci", "ci_fast", "flagship"]
+evidence_kinds = []
+
+[tool.env]

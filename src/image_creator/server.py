@@ -17,8 +17,8 @@ def build_server() -> FastMCP:
         aspect_ratio: str = "1:1",
         image_size: str = "",
         output_name: str = "",
-    ) -> str:
-        """Generate an image, save it to disk, and return JSON with the final file path."""
+    ) -> dict[str, str]:
+        """Generate an image, save it to disk, and return a structured result with the final file path."""
         result = await generate_image_artifact(
             prompt=prompt,
             provider=provider,
@@ -28,7 +28,7 @@ def build_server() -> FastMCP:
             image_size=image_size or None,
             output_name=output_name or None,
         )
-        return result.to_json()
+        return result.to_dict()
 
     return server
 

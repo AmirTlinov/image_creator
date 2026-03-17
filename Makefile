@@ -1,6 +1,12 @@
 bootstrap:
 	uv sync --dev
 
+lint:
+	uv run ruff check . --show-files
+
+typecheck:
+	uv run mypy src
+
 test:
 	uv run pytest
 
@@ -10,4 +16,4 @@ smoke:
 smoke-live:
 	uv run python -m image_creator.smoke
 
-check: test smoke
+check: lint typecheck test smoke

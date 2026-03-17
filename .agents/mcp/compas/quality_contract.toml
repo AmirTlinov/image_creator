@@ -12,7 +12,7 @@ max_suppressed_ratio = 0.30
 max_exception_window_days = 90
 
 [receipt_defaults]
-min_duration_ms = 100
+min_duration_ms = 10
 min_stdout_bytes = 10
 
 [governance]

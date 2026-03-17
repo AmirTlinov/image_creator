@@ -23,6 +23,22 @@
       "prev_hash": "33dd743b496f929cd77f07049493bbf5d8b63f99ae8e154817f97d3b01621795",
       "entry_hash": "af7504bcfc719e23082cbbc9f716aa44820651bde8bd846a8388777527d2d697",
       "ok": true
+    },
+    {
+      "gate_kind": "ci_fast",
+      "timestamp": "2026-03-17T23:52:03.594311884+00:00",
+      "witness_sha256": "8d0a1373790ae98c17006764a282e7bf1fa2a75a2c0b0b11e8e7344593d6e0eb",
+      "prev_hash": "af7504bcfc719e23082cbbc9f716aa44820651bde8bd846a8388777527d2d697",
+      "entry_hash": "c192203e3592f2459acfa02bff65aca11c3d646cdb732c1f022cda1f6c79dddf",
+      "ok": false
+    },
+    {
+      "gate_kind": "ci_fast",
+      "timestamp": "2026-03-17T23:52:26.262969147+00:00",
+      "witness_sha256": "165aa1e482c2dc8c497a42b7d41f09820db4825a1805113e88e2b9f97b6e69d2",
+      "prev_hash": "c192203e3592f2459acfa02bff65aca11c3d646cdb732c1f022cda1f6c79dddf",
+      "entry_hash": "a157a0dd8ac34fd6d98ffe346031c5fbc4a9f2d253471d11349f9fdf39b06214",
+      "ok": true
     }
   ]
 }

@@ -20,15 +20,15 @@ Build a thin MCP server that turns image-generation APIs into one stable local a
 ## Current repo state
 
 - bootstrap docs and skill-native memory are installed
-- Python package skeleton exists
-- Gemini and OpenRouter adapters are intentionally scaffolded, not implemented
+- OpenRouter adapter is implemented and live-proven in this environment
+- Gemini adapter is implemented, but still lacks live proof here because `GEMINI_API_KEY` is not configured
+- repo truth must stay in sync with the actual code and verification evidence
 
 ## Next slices
 
-1. implement Gemini adapter end-to-end
-2. implement OpenRouter adapter end-to-end
-3. add real smoke proof for one generated image written to disk
-4. only then decide whether `edit_image` deserves a second tool
+1. keep docs and change notes aligned with real implementation state
+2. close Gemini live proof once `GEMINI_API_KEY` is available
+3. only then decide whether `edit_image` deserves a second tool
 
 ## Update rule
 

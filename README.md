@@ -20,6 +20,8 @@ make check
 make smoke-live
 ```
 
+`make check` is intentionally small but real: lint + typecheck + tests + import smoke.
+
 ## Repo map
 
 - `AGENTS.md` — fast routing for future agents
