@@ -25,7 +25,7 @@ The MCP tool returns a structured object with this shape:
   "path": "/abs/path/to/outputs/img-1234.png",
   "mime_type": "image/png",
   "provider": "gemini",
-  "model": "gemini-2.5-flash-image"
+  "model": "gemini-3.1-flash-image-preview"
 }
 ```
 
@@ -44,14 +44,15 @@ The MCP tool returns a structured object with this shape:
 
 - endpoint family: `models/{model}:generateContent`
 - image bytes come from `candidates[0].content.parts[*].inlineData`
-- common first models: `gemini-2.5-flash-image`, `gemini-3.1-flash-image-preview`
+- current default model: `gemini-3.1-flash-image-preview`
+- older stable option still available: `gemini-2.5-flash-image`
 
 ### OpenRouter
 
 - endpoint: `/api/v1/chat/completions`
 - send `modalities: ["image", "text"]` or provider-compatible equivalent
 - image arrives in `choices[0].message.images[*].image_url.url` as a data URL
-- current proven default model: `google/gemini-2.5-flash-image`
+- current proven default model: `google/gemini-3.1-flash-image-preview`
 - compatibility aliases like `google/gemini-2.5-flash-image-preview` are normalized to the proven stable model
 
 ### Future OpenAI adapter

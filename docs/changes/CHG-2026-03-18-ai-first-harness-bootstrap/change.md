@@ -39,6 +39,7 @@ Executed on 2026-03-18:
 - `codex mcp add image_creator` + `codex mcp list` + `codex mcp get image_creator` -> pass
 - `codex exec ...` using MCP tool `generate_image` -> pass, structured MCP result proven, file written to `outputs/codex_exec/codex-exec-structured.png`
 - `codex exec ...` using MCP tool `edit_image` -> pass, structured MCP result proven, file written to `outputs/codex_exec/codex-edit-structured.png`
+- default image model moved to `Gemini 3.1 Flash Image Preview`; current OpenRouter models API exposes `google/gemini-3.1-flash-image-preview`
 
 ## known_gap
 

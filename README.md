@@ -10,6 +10,7 @@ Goal: expose one stable MCP tool that lets an agent send a prompt to a provider 
 - real OpenRouter generate and edit paths work and write image files to disk
 - Gemini adapter is implemented but not live-smoked here because no `GEMINI_API_KEY` is configured
 - `generate_image` and `edit_image` contracts are documented
+- current default image model is `Gemini 3.1 Flash Image Preview`
 
 ## Quick start
 

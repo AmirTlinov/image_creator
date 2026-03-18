@@ -25,15 +25,15 @@ def test_parse_generate_content_response_extracts_inline_data():
         ]
     }
 
-    result = GeminiProvider.parse_generate_content_response(payload, "gemini-2.5-flash-image")
+    result = GeminiProvider.parse_generate_content_response(payload, "gemini-3.1-flash-image-preview")
 
     assert result.data == b"png-bytes"
     assert result.mime_type == "image/png"
-    assert result.model == "gemini-2.5-flash-image"
+    assert result.model == "gemini-3.1-flash-image-preview"
 
 
 def test_parse_generate_content_response_requires_image():
     payload = {"candidates": [{"content": {"parts": [{"text": "only text"}]}}]}
 
     with pytest.raises(ProviderError):
-        GeminiProvider.parse_generate_content_response(payload, "gemini-2.5-flash-image")
+        GeminiProvider.parse_generate_content_response(payload, "gemini-3.1-flash-image-preview")

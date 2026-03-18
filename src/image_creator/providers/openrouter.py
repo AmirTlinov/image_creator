@@ -14,9 +14,10 @@ from image_creator.providers.common import (
 
 class OpenRouterProvider:
     name = "openrouter"
-    default_model = "google/gemini-2.5-flash-image"
+    default_model = "google/gemini-3.1-flash-image-preview"
     base_url = "https://openrouter.ai/api/v1"
     model_aliases = {
+        "google/gemini-3.1-flash-preview-image": "google/gemini-3.1-flash-image-preview",
         "google/gemini-2.5-flash-image-preview": "google/gemini-2.5-flash-image",
         "google/gemini-2.5-flash-preview-image": "google/gemini-2.5-flash-image",
         "nano-banana": "google/gemini-2.5-flash-image",

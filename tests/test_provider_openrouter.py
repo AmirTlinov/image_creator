@@ -33,21 +33,28 @@ def test_parse_chat_response_extracts_first_image():
         ]
     }
 
-    result = OpenRouterProvider.parse_chat_response(payload, "google/gemini-2.5-flash-image-preview")
+    result = OpenRouterProvider.parse_chat_response(payload, "google/gemini-3.1-flash-image-preview")
 
     assert result.data == b"png-bytes"
     assert result.mime_type == "image/png"
-    assert result.model == "google/gemini-2.5-flash-image-preview"
+    assert result.model == "google/gemini-3.1-flash-image-preview"
 
 
 def test_parse_chat_response_requires_images():
     payload = {"choices": [{"message": {"content": "no image"}}]}
 
     with pytest.raises(ProviderError):
-        OpenRouterProvider.parse_chat_response(payload, "google/gemini-2.5-flash-image-preview")
+        OpenRouterProvider.parse_chat_response(payload, "google/gemini-3.1-flash-image-preview")
 
 
 def test_normalize_model_maps_old_preview_alias_to_working_model():
+    assert (
+        OpenRouterProvider.normalize_model("google/gemini-3.1-flash-preview-image")
+        == "google/gemini-3.1-flash-image-preview"
+    )
+
+
+def test_normalize_model_keeps_old_2_5_alias_on_stable_2_5_model():
     assert (
         OpenRouterProvider.normalize_model("google/gemini-2.5-flash-image-preview")
         == "google/gemini-2.5-flash-image"

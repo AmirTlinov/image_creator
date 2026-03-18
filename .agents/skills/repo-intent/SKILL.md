@@ -21,6 +21,7 @@ Build a thin MCP server that turns image-generation APIs into one stable local a
 
 - bootstrap docs and skill-native memory are installed
 - OpenRouter generate and edit paths are implemented and live-proven in this environment
+- default image model target is now `Gemini 3.1 Flash Image Preview`
 - Gemini adapter is implemented, but still lacks live proof here because `GEMINI_API_KEY` is not configured
 - repo truth must stay in sync with the actual code and verification evidence
 

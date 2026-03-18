@@ -26,7 +26,7 @@ The MCP tool returns a structured object:
   "path": "/abs/path/to/outputs/banana-with-glasses.png",
   "mime_type": "image/png",
   "provider": "openrouter",
-  "model": "google/gemini-2.5-flash-image"
+  "model": "google/gemini-3.1-flash-image-preview"
 }
 ```
 
@@ -45,7 +45,7 @@ The MCP tool returns a structured object:
 - endpoint: `/api/v1/chat/completions`
 - editing request uses a `messages[0].content` array with text + `image_url`
 - local source files are sent as base64 data URLs
-- current proven default model: `google/gemini-2.5-flash-image`
+- current proven default model: `google/gemini-3.1-flash-image-preview`
 
 ### Gemini
 

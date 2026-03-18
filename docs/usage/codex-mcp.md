@@ -56,7 +56,7 @@ Example edit call:
 ## Notes
 
 - Current default provider is `openrouter`.
-- Current proven OpenRouter default model is `google/gemini-2.5-flash-image`.
+- Current proven OpenRouter default model is `google/gemini-3.1-flash-image-preview`.
 - Old preview aliases like `google/gemini-2.5-flash-image-preview` are normalized to the working stable model.
 - `make check` runs lint + typecheck + tests + import smoke without adding a heavy CI layer.
 - Gemini code path is implemented, but still not live-proven on this machine until `GEMINI_API_KEY` is set.

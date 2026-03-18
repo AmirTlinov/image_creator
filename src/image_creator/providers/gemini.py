@@ -11,9 +11,10 @@ from image_creator.providers.common import ProviderError, post_json_with_retries
 
 class GeminiProvider:
     name = "gemini"
-    default_model = "gemini-2.5-flash-image"
+    default_model = "gemini-3.1-flash-image-preview"
     base_url = "https://generativelanguage.googleapis.com/v1beta"
     model_aliases = {
+        "gemini-3.1-flash-preview-image": "gemini-3.1-flash-image-preview",
         "gemini-2.5-flash-image-preview": "gemini-2.5-flash-image",
         "nano-banana": "gemini-2.5-flash-image",
     }
