@@ -23,6 +23,8 @@ make check
 make smoke-live
 make smoke-edit-live
 make smoke-transparent-live
+make smoke-transparent-fast-live
+make smoke-cutout-live
 make verify-model-catalog
 ```
 
@@ -42,8 +44,10 @@ make verify-model-catalog
 1. agent calls `list_image_profiles` to choose `draft`, `quality`, `text_heavy`, `edit`, `character_consistency`, or `style_transfer`
 2. agent can still override `provider` and `model` explicitly for exceptional cases
 3. `reference_images` let the agent send role-tagged refs like `style`, `object`, or `character`
-4. `transparent_bg` chooses the GPT-image route because Gemini cannot produce true transparent backgrounds in this tool surface
-5. Gemini live smoke still waits on `GEMINI_API_KEY`
+4. `transparent_bg` = balanced transparent-background path
+5. `transparent_bg_fast` = cheaper/faster transparent draft path
+6. `cutout` = higher-fidelity transparent asset path
+7. Gemini live smoke still waits on `GEMINI_API_KEY`
 
 ## Codex MCP hookup
 

@@ -25,6 +25,24 @@ smoke-transparent-live:
 		--out-dir outputs/transparent_proofs
 	file outputs/transparent_proofs/smoke-transparent-proof.png
 
+smoke-transparent-fast-live:
+	uv run python -m image_creator.smoke \
+		--mode generate \
+		--profile transparent_bg_fast \
+		--prompt "Create a simple blue square centered on a transparent background." \
+		--output-name smoke-transparent-fast-proof \
+		--out-dir outputs/transparent_proofs
+	file outputs/transparent_proofs/smoke-transparent-fast-proof.png
+
+smoke-cutout-live:
+	uv run python -m image_creator.smoke \
+		--mode generate \
+		--profile cutout \
+		--prompt "Create a clean isolated product cutout of a white ceramic mug on a transparent background. Full object visible, clean silhouette, no extra objects." \
+		--output-name smoke-cutout-proof \
+		--out-dir outputs/transparent_proofs
+	file outputs/transparent_proofs/smoke-cutout-proof.png
+
 verify-model-catalog:
 	uv run python -m image_creator.verify_model_catalog
 

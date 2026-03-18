@@ -73,7 +73,9 @@ The MCP tool returns a structured object with this shape:
 - `text_heavy` -> typography and layout-critical assets
 - `character_consistency` -> character-preserving generation with refs
 - `style_transfer` -> restyling with composition preserved
-- `transparent_bg` -> transparent-background generation through GPT image
+- `transparent_bg` -> balanced transparent-background generation through GPT image
+- `transparent_bg_fast` -> faster/cheaper transparent-background drafts through GPT image mini
+- `cutout` -> higher-fidelity transparent-background asset generation through GPT image
 
 ### Future OpenAI adapter
 

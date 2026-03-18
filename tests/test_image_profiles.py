@@ -82,3 +82,37 @@ def test_transparent_bg_profile_resolves_to_openai_gpt_image():
     assert resolved.background_mode == "transparent"
     assert resolved.output_format == "png"
     assert resolved.quality_level == "medium"
+
+
+def test_transparent_bg_fast_profile_resolves_to_gpt_5_image_mini():
+    resolved = resolve_image_selection(
+        provider="openrouter",
+        model=None,
+        profile="transparent_bg_fast",
+        image_size=None,
+        background_mode=None,
+        output_format=None,
+        quality_level=None,
+    )
+
+    assert resolved.model == "openai/gpt-5-image-mini"
+    assert resolved.background_mode == "transparent"
+    assert resolved.output_format == "png"
+    assert resolved.quality_level == "low"
+
+
+def test_cutout_profile_resolves_to_quality_transparent_gpt_image():
+    resolved = resolve_image_selection(
+        provider="openrouter",
+        model=None,
+        profile="cutout",
+        image_size=None,
+        background_mode=None,
+        output_format=None,
+        quality_level=None,
+    )
+
+    assert resolved.model == "openai/gpt-5-image"
+    assert resolved.background_mode == "transparent"
+    assert resolved.output_format == "png"
+    assert resolved.quality_level == "high"

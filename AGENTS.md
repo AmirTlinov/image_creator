@@ -19,6 +19,7 @@ Thin MCP server for image generation. Core contract: `generate_image` should alw
 - `src/image_creator/.agents/skills/SKILLS.md` — owning domain registry
 - `Makefile` — bootstrap / test / smoke entrypoints
 - `make smoke-transparent-live` — proof path for transparent-background generation via GPT image
+- `make smoke-transparent-fast-live` / `make smoke-cutout-live` — proof paths for fast vs premium transparent asset workflows
 
 ## Verify
 

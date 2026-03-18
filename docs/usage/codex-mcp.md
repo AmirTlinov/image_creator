@@ -24,6 +24,8 @@ codex mcp get image_creator
 make smoke-live
 make smoke-edit-live
 make smoke-transparent-live
+make smoke-transparent-fast-live
+make smoke-cutout-live
 make verify-model-catalog
 ```
 
@@ -72,6 +74,26 @@ Transparent background / cutout:
 }
 ```
 
+Faster/cheaper transparent draft:
+
+```json
+{
+  "prompt": "Simple sticker-style icon of a rocket on a transparent background",
+  "profile": "transparent_bg_fast",
+  "output_name": "rocket-transparent-draft"
+}
+```
+
+Higher-fidelity product cutout:
+
+```json
+{
+  "prompt": "Premium isolated product cutout of a white ceramic mug",
+  "profile": "cutout",
+  "output_name": "mug-cutout"
+}
+```
+
 Example edit call:
 
 ```json
@@ -103,6 +125,8 @@ Reference-aware style transfer:
 - Current default provider is `openrouter`.
 - Current proven OpenRouter default model is `google/gemini-3.1-flash-image-preview`.
 - Transparent background generation is intentionally routed to `openai/gpt-5-image` through OpenRouter.
+- `transparent_bg_fast` intentionally routes to `openai/gpt-5-image-mini`.
+- `cutout` intentionally routes to `openai/gpt-5-image` with a quality-biased default.
 - In the current repo truth, Gemini-family image paths do not support true transparent-background generation.
 - Old preview aliases like `google/gemini-2.5-flash-image-preview` are normalized to the working stable model.
 - Profiles are the preferred default; explicit `model` override is for exceptional cases.

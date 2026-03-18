@@ -25,6 +25,7 @@ Build a thin MCP server that turns image-generation APIs into one stable local a
 - default image model target is now `Gemini 3.1 Flash Image Preview`
 - curated profiles now define when to use `3.1 Flash Image Preview` vs `3 Pro Image Preview`
 - transparent-background generation is now a GPT-image path and should not be attempted on Gemini-family routes
+- transparent-background work is further split into balanced (`transparent_bg`), fast (`transparent_bg_fast`), and higher-fidelity (`cutout`) paths
 - Gemini adapter is implemented, but still lacks live proof here because `GEMINI_API_KEY` is not configured
 - repo truth must stay in sync with the actual code and verification evidence
 

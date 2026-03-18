@@ -112,6 +112,32 @@ IMAGE_PROFILES: dict[str, ImageProfile] = {
         default_output_format="png",
         default_quality_level="medium",
     ),
+    "transparent_bg_fast": ImageProfile(
+        id="transparent_bg_fast",
+        provider="openrouter",
+        model="openai/gpt-5-image-mini",
+        best_for=("fast transparent background", "cheap alpha-channel drafts", "quick isolated assets"),
+        supports_references=False,
+        recommended_aspect_ratio_behavior="Set explicitly to the target asset ratio before generating.",
+        recommended_image_size_behavior="Use for quick transparent drafts before committing to a higher-fidelity cutout pass.",
+        notes="Fastest transparent-background route when speed and cost matter more than edge fidelity.",
+        default_background_mode="transparent",
+        default_output_format="png",
+        default_quality_level="low",
+    ),
+    "cutout": ImageProfile(
+        id="cutout",
+        provider="openrouter",
+        model="openai/gpt-5-image",
+        best_for=("premium cutouts", "product isolation", "high-fidelity transparent assets"),
+        supports_references=True,
+        recommended_aspect_ratio_behavior="Set explicitly to the final asset ratio to avoid avoidable reframing.",
+        recommended_image_size_behavior='Prefer "2K" or keep the default quality-high path when the object edges must hold up in production use.',
+        notes="Quality-biased transparent-background route for product and brand assets where edge fidelity matters.",
+        default_background_mode="transparent",
+        default_output_format="png",
+        default_quality_level="high",
+    ),
 }
 
 
