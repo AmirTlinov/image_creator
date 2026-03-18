@@ -16,6 +16,9 @@ Give an agent one stable way to produce an image file that can be reused later i
 - `aspect_ratio: str` — optional provider-supported ratio such as `1:1`, `16:9`, `9:16`
 - `image_size: str` — optional provider-supported size such as `1K`, `2K`, `4K`
 - `negative_prompt: str` — optional explicit constraints for things that must not appear
+- `background_mode: str` — optional; use `transparent` only on the GPT-image route
+- `output_format: str` — optional; currently meaningful on the GPT-image route (`png`, `webp`, `jpeg`)
+- `quality_level: str` — optional; currently meaningful on the GPT-image route (`low`, `medium`, `high`)
 - `reference_images: list[{path, role}]` — optional role-tagged references; supported roles are `style`, `subject`, `object`, `character`, `layout`
 - `output_name: str` — optional stable filename stem
 
@@ -43,6 +46,7 @@ The MCP tool returns a structured object with this shape:
 - explicit `model` overrides `profile` when both are provided
 - invalid `provider` / `model` combinations fail early
 - current Gemini-family reference limits are enforced: max 14 refs total, max 4 `character`, max 10 non-character
+- `background_mode=transparent` is rejected on Gemini-family routes and must use the GPT-image path
 - keep provider-specific HTTP and response parsing inside adapter modules
 
 ## Provider mapping notes
@@ -69,6 +73,7 @@ The MCP tool returns a structured object with this shape:
 - `text_heavy` -> typography and layout-critical assets
 - `character_consistency` -> character-preserving generation with refs
 - `style_transfer` -> restyling with composition preserved
+- `transparent_bg` -> transparent-background generation through GPT image
 
 ### Future OpenAI adapter
 

@@ -15,6 +15,9 @@ def test_quality_profile_resolves_to_gemini_3_pro():
         model=None,
         profile="quality",
         image_size=None,
+        background_mode=None,
+        output_format=None,
+        quality_level=None,
     )
 
     assert resolved.provider == "openrouter"
@@ -29,6 +32,9 @@ def test_explicit_model_override_beats_profile_default_model():
         model="google/gemini-3.1-flash-image-preview",
         profile="quality",
         image_size=None,
+        background_mode=None,
+        output_format=None,
+        quality_level=None,
     )
 
     assert resolved.model == "google/gemini-3.1-flash-image-preview"
@@ -42,6 +48,9 @@ def test_profile_provider_mismatch_fails():
             model=None,
             profile="quality",
             image_size=None,
+            background_mode=None,
+            output_format=None,
+            quality_level=None,
         )
 
 
@@ -52,4 +61,24 @@ def test_incompatible_provider_and_model_fails():
             model="google/gemini-3.1-flash-image-preview",
             profile=None,
             image_size=None,
+            background_mode=None,
+            output_format=None,
+            quality_level=None,
         )
+
+
+def test_transparent_bg_profile_resolves_to_openai_gpt_image():
+    resolved = resolve_image_selection(
+        provider="openrouter",
+        model=None,
+        profile="transparent_bg",
+        image_size=None,
+        background_mode=None,
+        output_format=None,
+        quality_level=None,
+    )
+
+    assert resolved.model == "openai/gpt-5-image"
+    assert resolved.background_mode == "transparent"
+    assert resolved.output_format == "png"
+    assert resolved.quality_level == "medium"

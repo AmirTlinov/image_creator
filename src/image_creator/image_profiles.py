@@ -14,6 +14,9 @@ class ImageProfile:
     recommended_image_size_behavior: str
     notes: str
     default_image_size: str | None = None
+    default_background_mode: str | None = None
+    default_output_format: str | None = None
+    default_quality_level: str | None = None
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -25,6 +28,9 @@ class ImageProfile:
             "recommended_aspect_ratio_behavior": self.recommended_aspect_ratio_behavior,
             "recommended_image_size_behavior": self.recommended_image_size_behavior,
             "notes": self.notes,
+            "default_background_mode": self.default_background_mode,
+            "default_output_format": self.default_output_format,
+            "default_quality_level": self.default_quality_level,
         }
 
 
@@ -93,6 +99,19 @@ IMAGE_PROFILES: dict[str, ImageProfile] = {
         notes="Best when one image establishes composition and another establishes rendering style.",
         default_image_size="2K",
     ),
+    "transparent_bg": ImageProfile(
+        id="transparent_bg",
+        provider="openrouter",
+        model="openai/gpt-5-image",
+        best_for=("transparent background", "clean cutouts", "isolated assets"),
+        supports_references=False,
+        recommended_aspect_ratio_behavior="Set explicitly to the target asset ratio before generating.",
+        recommended_image_size_behavior='Use "2K" only if the cutout needs extra detail; otherwise rely on the GPT image quality dial.',
+        notes="Use when alpha channel matters. Avoid Gemini-family models for this workflow.",
+        default_background_mode="transparent",
+        default_output_format="png",
+        default_quality_level="medium",
+    ),
 }
 
 
@@ -145,6 +164,9 @@ class ResolvedImageSelection:
     model: str | None
     profile: str
     image_size: str | None
+    background_mode: str | None
+    output_format: str | None
+    quality_level: str | None
 
 
 def resolve_image_selection(
@@ -153,11 +175,17 @@ def resolve_image_selection(
     model: str | None,
     profile: str | None,
     image_size: str | None,
+    background_mode: str | None,
+    output_format: str | None,
+    quality_level: str | None,
 ) -> ResolvedImageSelection:
     requested_provider = provider.strip().lower()
     requested_model = model.strip() if model else ""
     requested_profile = profile.strip().lower() if profile else ""
     requested_image_size = image_size.strip() if image_size else ""
+    requested_background_mode = background_mode.strip().lower() if background_mode else ""
+    requested_output_format = output_format.strip().lower() if output_format else ""
+    requested_quality_level = quality_level.strip().lower() if quality_level else ""
 
     if requested_profile:
         chosen_profile = get_profile(requested_profile)
@@ -173,6 +201,9 @@ def resolve_image_selection(
             model=resolved_model,
             profile=chosen_profile.id,
             image_size=requested_image_size or chosen_profile.default_image_size,
+            background_mode=requested_background_mode or chosen_profile.default_background_mode,
+            output_format=requested_output_format or chosen_profile.default_output_format,
+            quality_level=requested_quality_level or chosen_profile.default_quality_level,
         )
 
     validate_provider_model_compatibility(provider=requested_provider, model=requested_model)
@@ -181,4 +212,7 @@ def resolve_image_selection(
         model=requested_model or None,
         profile="",
         image_size=requested_image_size or None,
+        background_mode=requested_background_mode or None,
+        output_format=requested_output_format or None,
+        quality_level=requested_quality_level or None,
     )

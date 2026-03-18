@@ -17,6 +17,9 @@ Take an existing local image file, send it to a provider together with an edit p
 - `aspect_ratio: str` — optional provider-supported ratio such as `1:1`, `16:9`, `9:16`
 - `image_size: str` — optional provider-supported size such as `1K`, `2K`, `4K`
 - `negative_prompt: str` — optional explicit constraints for things that must not appear
+- `background_mode: str` — optional; use `transparent` only on the GPT-image route
+- `output_format: str` — optional; currently meaningful on the GPT-image route (`png`, `webp`, `jpeg`)
+- `quality_level: str` — optional; currently meaningful on the GPT-image route (`low`, `medium`, `high`)
 - `reference_images: list[{path, role}]` — optional non-editable references with roles `style`, `subject`, `object`, `character`, `layout`
 - `output_name: str` — optional preferred filename stem; collisions are resolved by sibling suffixes
 
@@ -43,6 +46,7 @@ The MCP tool returns a structured object:
 - do not overwrite an existing output path; allocate a collision-safe sibling name instead
 - `input_path` is always the editable base image
 - `reference_images` are guidance-only and must not be treated as extra editable bases
+- `background_mode=transparent` is rejected on Gemini-family routes and must use the GPT-image path
 
 ## Provider mapping notes
 

@@ -16,6 +16,15 @@ smoke:
 smoke-live:
 	uv run python -m image_creator.smoke
 
+smoke-transparent-live:
+	uv run python -m image_creator.smoke \
+		--mode generate \
+		--profile transparent_bg \
+		--prompt "Create a simple red circle centered on a transparent background." \
+		--output-name smoke-transparent-proof \
+		--out-dir outputs/transparent_proofs
+	file outputs/transparent_proofs/smoke-transparent-proof.png
+
 verify-model-catalog:
 	uv run python -m image_creator.verify_model_catalog
 

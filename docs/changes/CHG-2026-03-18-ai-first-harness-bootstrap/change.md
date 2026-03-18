@@ -15,6 +15,7 @@ Bootstrap and complete the first flagship implementation of the MCP image creato
 - OpenRouter generate and edit paths are implemented and live-proven
 - curated profile-first model selection exists with explicit raw model override
 - `list_image_profiles` gives the agent a cheap discovery surface
+- transparent-background generation is routed to a GPT-image profile instead of the Gemini path
 - deterministic verify commands exist
 - lint, typecheck, tests, import smoke, and ci_fast gate pass
 
@@ -37,6 +38,7 @@ Executed on 2026-03-18:
 - `make smoke` -> pass
 - `make smoke-live` -> pass via OpenRouter, file written to `outputs/smoke/smoke-image-4.png`
 - `make smoke-edit-live` -> pass via OpenRouter, file written to `outputs/smoke_edit_result/smoke-edit-result-3.png`
+- `make smoke-transparent-live` -> pass via OpenRouter GPT-image route, file written to `outputs/transparent_proofs/smoke-transparent-proof.png` and detected as `RGBA`
 - `compas validate mode=ratchet` -> pass
 - `compas gate kind=ci_fast` -> pass
 - `codex mcp add image_creator` + `codex mcp list` + `codex mcp get image_creator` -> pass

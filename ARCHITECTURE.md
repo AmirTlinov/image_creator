@@ -34,6 +34,7 @@ Turn multiple image APIs into one stable MCP tool:
 5. File writes are centralized in `storage.py` and must allocate collision-safe sibling names instead of overwriting by default.
 6. Provider HTTP retries and timeout handling stay inside `providers/common.py`.
 7. `generate_image` and `edit_image` stay separate tools; `edit_image` owns the editable base image semantics.
+8. Transparent background generation is a GPT-image-only path in the current repo truth; Gemini-family image paths must fail early for this request instead of silently producing opaque images.
 
 ## Planned slices
 

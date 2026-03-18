@@ -23,6 +23,7 @@ codex mcp get image_creator
 ```bash
 make smoke-live
 make smoke-edit-live
+make smoke-transparent-live
 make verify-model-catalog
 ```
 
@@ -61,6 +62,16 @@ Higher-quality final pass:
 }
 ```
 
+Transparent background / cutout:
+
+```json
+{
+  "prompt": "Clean isolated product cutout of a red sneaker",
+  "profile": "transparent_bg",
+  "output_name": "sneaker-cutout"
+}
+```
+
 Example edit call:
 
 ```json
@@ -91,6 +102,8 @@ Reference-aware style transfer:
 
 - Current default provider is `openrouter`.
 - Current proven OpenRouter default model is `google/gemini-3.1-flash-image-preview`.
+- Transparent background generation is intentionally routed to `openai/gpt-5-image` through OpenRouter.
+- In the current repo truth, Gemini-family image paths do not support true transparent-background generation.
 - Old preview aliases like `google/gemini-2.5-flash-image-preview` are normalized to the working stable model.
 - Profiles are the preferred default; explicit `model` override is for exceptional cases.
 - `make check` runs lint + typecheck + tests + import smoke without adding a heavy CI layer.

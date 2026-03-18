@@ -20,6 +20,9 @@ class ImageProvider(Protocol):
         image_size: str | None,
         negative_prompt: str | None = None,
         reference_images: Sequence[ReferenceImageInput] = (),
+        background_mode: str | None = None,
+        output_format: str | None = None,
+        quality_level: str | None = None,
     ) -> ProviderImage:
         ...
 
@@ -33,5 +36,8 @@ class ImageProvider(Protocol):
         image_size: str | None,
         negative_prompt: str | None = None,
         reference_images: Sequence[ReferenceImageInput] = (),
+        background_mode: str | None = None,
+        output_format: str | None = None,
+        quality_level: str | None = None,
     ) -> ProviderImage:
         ...

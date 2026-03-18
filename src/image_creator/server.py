@@ -18,6 +18,9 @@ def build_server() -> FastMCP:
         aspect_ratio: str = "1:1",
         image_size: str = "",
         negative_prompt: str = "",
+        background_mode: str = "",
+        output_format: str = "",
+        quality_level: str = "",
         reference_images: list[dict[str, str]] | None = None,
         output_name: str = "",
     ) -> dict[str, str]:
@@ -31,6 +34,9 @@ def build_server() -> FastMCP:
             aspect_ratio=aspect_ratio or None,
             image_size=image_size or None,
             negative_prompt=negative_prompt or None,
+            background_mode=background_mode or None,
+            output_format=output_format or None,
+            quality_level=quality_level or None,
             reference_images=reference_images,
             output_name=output_name or None,
         )
@@ -47,6 +53,9 @@ def build_server() -> FastMCP:
         aspect_ratio: str = "1:1",
         image_size: str = "",
         negative_prompt: str = "",
+        background_mode: str = "",
+        output_format: str = "",
+        quality_level: str = "",
         reference_images: list[dict[str, str]] | None = None,
         output_name: str = "",
     ) -> dict[str, str]:
@@ -61,6 +70,9 @@ def build_server() -> FastMCP:
             aspect_ratio=aspect_ratio or None,
             image_size=image_size or None,
             negative_prompt=negative_prompt or None,
+            background_mode=background_mode or None,
+            output_format=output_format or None,
+            quality_level=quality_level or None,
             reference_images=reference_images,
             output_name=output_name or None,
         )

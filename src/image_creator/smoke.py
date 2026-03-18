@@ -29,6 +29,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--aspect-ratio", default="1:1")
     parser.add_argument("--image-size", default="")
     parser.add_argument("--negative-prompt", default="")
+    parser.add_argument("--background-mode", default="")
+    parser.add_argument("--output-format", default="")
+    parser.add_argument("--quality-level", default="")
     parser.add_argument("--reference-image", action="append", default=[])
     parser.add_argument("--output-name", default="smoke-image")
     parser.add_argument("--out-dir", default="outputs/smoke")
@@ -49,6 +52,9 @@ async def _main() -> None:
             aspect_ratio=args.aspect_ratio or None,
             image_size=args.image_size or None,
             negative_prompt=args.negative_prompt or None,
+            background_mode=args.background_mode or None,
+            output_format=args.output_format or None,
+            quality_level=args.quality_level or None,
             reference_images=reference_images,
             output_name=args.output_name or None,
         )
@@ -65,6 +71,9 @@ async def _main() -> None:
             aspect_ratio=args.aspect_ratio or None,
             image_size=args.image_size or None,
             negative_prompt=args.negative_prompt or None,
+            background_mode=args.background_mode or None,
+            output_format=args.output_format or None,
+            quality_level=args.quality_level or None,
             reference_images=reference_images,
             output_name=args.output_name or None,
         )

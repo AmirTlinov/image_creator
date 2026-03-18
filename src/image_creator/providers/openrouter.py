@@ -82,6 +82,9 @@ class OpenRouterProvider:
         image_size: str | None,
         negative_prompt: str | None = None,
         reference_images: Sequence[ReferenceImageInput] = (),
+        background_mode: str | None = None,
+        output_format: str | None = None,
+        quality_level: str | None = None,
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("OPENROUTER_API_KEY is not configured.")
@@ -114,6 +117,14 @@ class OpenRouterProvider:
             "stream": False,
         }
 
+        if chosen_model.startswith("openai/gpt-5-image"):
+            if background_mode:
+                payload["background"] = background_mode
+            if output_format:
+                payload["output_format"] = output_format
+            if quality_level:
+                payload["quality"] = quality_level
+
         image_config: dict[str, str] = {}
         if aspect_ratio:
             image_config["aspect_ratio"] = aspect_ratio
@@ -145,6 +156,9 @@ class OpenRouterProvider:
         image_size: str | None,
         negative_prompt: str | None = None,
         reference_images: Sequence[ReferenceImageInput] = (),
+        background_mode: str | None = None,
+        output_format: str | None = None,
+        quality_level: str | None = None,
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("OPENROUTER_API_KEY is not configured.")
@@ -187,6 +201,14 @@ class OpenRouterProvider:
             "modalities": ["image", "text"],
             "stream": False,
         }
+
+        if chosen_model.startswith("openai/gpt-5-image"):
+            if background_mode:
+                payload["background"] = background_mode
+            if output_format:
+                payload["output_format"] = output_format
+            if quality_level:
+                payload["quality"] = quality_level
 
         image_config: dict[str, str] = {}
         if aspect_ratio:

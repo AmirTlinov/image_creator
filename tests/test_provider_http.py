@@ -221,6 +221,53 @@ async def test_openrouter_generate_sends_reference_images_after_text_part() -> N
 
 
 @pytest.mark.anyio
+async def test_openrouter_gpt_image_accepts_transparency_fields() -> None:
+    encoded = base64.b64encode(b"png-bytes").decode()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.content.decode())
+        assert payload["background"] == "transparent"
+        assert payload["output_format"] == "png"
+        assert payload["quality"] == "medium"
+        return httpx.Response(
+            200,
+            json={
+                "choices": [
+                    {
+                        "message": {
+                            "images": [
+                                {
+                                    "image_url": {
+                                        "url": f"data:image/png;base64,{encoded}",
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+        )
+
+    provider = OpenRouterProvider(
+        api_key="test-key",
+        transport=httpx.MockTransport(handler),
+        retry_delay_sec=0.0,
+    )
+
+    result = await provider.generate(
+        prompt="transparent product cutout",
+        model="openai/gpt-5-image-mini",
+        aspect_ratio="1:1",
+        image_size=None,
+        background_mode="transparent",
+        output_format="png",
+        quality_level="medium",
+    )
+
+    assert result.data == b"png-bytes"
+
+
+@pytest.mark.anyio
 async def test_gemini_edit_sends_text_base_then_references() -> None:
     encoded = base64.b64encode(b"edited").decode()
 

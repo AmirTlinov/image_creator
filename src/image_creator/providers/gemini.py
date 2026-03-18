@@ -74,6 +74,9 @@ class GeminiProvider:
         image_size: str | None,
         negative_prompt: str | None = None,
         reference_images: Sequence[ReferenceImageInput] = (),
+        background_mode: str | None = None,
+        output_format: str | None = None,
+        quality_level: str | None = None,
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("GEMINI_API_KEY is not configured.")
@@ -129,6 +132,9 @@ class GeminiProvider:
         image_size: str | None,
         negative_prompt: str | None = None,
         reference_images: Sequence[ReferenceImageInput] = (),
+        background_mode: str | None = None,
+        output_format: str | None = None,
+        quality_level: str | None = None,
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("GEMINI_API_KEY is not configured.")
