@@ -45,7 +45,6 @@ Executed on 2026-03-18:
 - `make smoke-transparent-fast-live` -> pass via OpenRouter GPT-image-mini route, file written to `outputs/transparent_proofs/smoke-transparent-fast-proof.png` and detected as `RGBA`
 - `make smoke-cutout-live` -> pass via OpenRouter GPT-image route, file written to `outputs/transparent_proofs/smoke-cutout-proof.png` and detected as `RGBA`
 - `make smoke-remove-bg-live` -> pass via local `rembg:u2net` route, file written to `outputs/remove_bg_result/smoke-remove-bg-proof.png` and detected as `RGBA`
-- `make smoke-remove-bg-live` -> pass via local `rembg:u2net` route, file written to `outputs/remove_bg_result/smoke-remove-bg-proof.png` and detected as `RGBA`
 - `compas validate mode=ratchet` -> pass
 - `compas gate kind=ci_fast` -> pass
 - `codex mcp add image_creator` + `codex mcp list` + `codex mcp get image_creator` -> pass
