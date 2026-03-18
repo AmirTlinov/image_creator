@@ -5,6 +5,7 @@ import base64
 import httpx
 
 from image_creator.contracts import ProviderImage
+from image_creator.image_io import LocalImageInput
 from image_creator.providers.common import ProviderError, post_json_with_retries, summarize_json
 
 
@@ -85,6 +86,54 @@ class GeminiProvider:
 
         payload: dict[str, object] = {
             "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": generation_config,
+        }
+
+        body = await post_json_with_retries(
+            url=f"{self.base_url}/models/{chosen_model}:generateContent",
+            headers={
+                "x-goog-api-key": self.api_key,
+                "Content-Type": "application/json",
+            },
+            payload=payload,
+            transport=self.transport,
+            max_attempts=self.max_attempts,
+            retry_delay_sec=self.retry_delay_sec,
+        )
+        return self.parse_generate_content_response(body, chosen_model)
+
+    async def edit(
+        self,
+        *,
+        source_image: LocalImageInput,
+        prompt: str,
+        model: str | None,
+        aspect_ratio: str | None,
+        image_size: str | None,
+    ) -> ProviderImage:
+        if not self.api_key:
+            raise ProviderError("GEMINI_API_KEY is not configured.")
+
+        chosen_model = self.normalize_model(model)
+        generation_config: dict[str, object] = {"responseModalities": ["Image"]}
+
+        image_config: dict[str, str] = {}
+        if aspect_ratio:
+            image_config["aspectRatio"] = aspect_ratio
+        if image_size:
+            image_config["imageSize"] = image_size
+        if image_config:
+            generation_config["imageConfig"] = image_config
+
+        payload: dict[str, object] = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": prompt},
+                        {"inline_data": source_image.to_gemini_inline_data()},
+                    ]
+                }
+            ],
             "generationConfig": generation_config,
         }
 

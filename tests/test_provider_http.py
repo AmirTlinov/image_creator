@@ -99,3 +99,55 @@ async def test_openrouter_rejects_non_json_response_body() -> None:
             aspect_ratio="1:1",
             image_size=None,
         )
+
+
+@pytest.mark.anyio
+async def test_openrouter_edit_sends_input_image_as_data_url() -> None:
+    encoded = base64.b64encode(b"edited").decode()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.content.decode())
+        content = payload["messages"][0]["content"]
+        assert content[0]["type"] == "text"
+        assert content[1]["type"] == "image_url"
+        assert content[1]["image_url"]["url"].startswith("data:image/png;base64,")
+        return httpx.Response(
+            200,
+            json={
+                "choices": [
+                    {
+                        "message": {
+                            "images": [
+                                {
+                                    "image_url": {
+                                        "url": f"data:image/png;base64,{encoded}",
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+        )
+
+    provider = OpenRouterProvider(
+        api_key="test-key",
+        transport=httpx.MockTransport(handler),
+        retry_delay_sec=0.0,
+    )
+
+    from image_creator.image_io import LocalImageInput
+
+    result = await provider.edit(
+        source_image=LocalImageInput(
+            path=__import__("pathlib").Path("/tmp/source.png"),
+            mime_type="image/png",
+            data=b"source-image",
+        ),
+        prompt="add sunglasses",
+        model=None,
+        aspect_ratio="1:1",
+        image_size=None,
+    )
+
+    assert result.data == b"edited"

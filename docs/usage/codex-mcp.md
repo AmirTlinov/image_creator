@@ -22,6 +22,7 @@ codex mcp get image_creator
 
 ```bash
 make smoke-live
+make smoke-edit-live
 ```
 
 Expected result: JSON with `path`, `mime_type`, `provider`, and `model`, and a real file created under `outputs/`.
@@ -37,6 +38,18 @@ Use tool `generate_image` with arguments like:
   "provider": "openrouter",
   "out_dir": "outputs/codex_exec",
   "output_name": "codex-exec-smoke"
+}
+```
+
+Example edit call:
+
+```json
+{
+  "input_path": "outputs/smoke/smoke-openrouter-default.png",
+  "prompt": "Add black sunglasses and keep the white background",
+  "provider": "openrouter",
+  "out_dir": "outputs/codex_exec",
+  "output_name": "codex-edit-smoke"
 }
 ```
 

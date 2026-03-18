@@ -5,6 +5,7 @@ Thin MCP server for image generation. Core contract: `generate_image` should alw
 ## Start here by task
 
 - Tool contract and file-output semantics -> `docs/contracts/generate-image.md`
+- Edit tool contract -> `docs/contracts/edit-image.md`
 - Codex MCP hookup and local smoke -> `docs/usage/codex-mcp.md`
 - Repo-wide intent and guardrails -> `.agents/skills/repo-intent/SKILL.md`
 - Server / adapter / storage implementation -> `src/image_creator/AGENTS.md`

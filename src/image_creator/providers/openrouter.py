@@ -3,6 +3,7 @@ from __future__ import annotations
 import httpx
 
 from image_creator.contracts import ProviderImage
+from image_creator.image_io import LocalImageInput
 from image_creator.providers.common import (
     ProviderError,
     decode_data_url,
@@ -83,6 +84,60 @@ class OpenRouterProvider:
         payload: dict[str, object] = {
             "model": chosen_model,
             "messages": [{"role": "user", "content": prompt}],
+            "modalities": ["image", "text"],
+            "stream": False,
+        }
+
+        image_config: dict[str, str] = {}
+        if aspect_ratio:
+            image_config["aspect_ratio"] = aspect_ratio
+        if image_size:
+            image_config["image_size"] = image_size
+        if image_config:
+            payload["image_config"] = image_config
+
+        body = await post_json_with_retries(
+            url=f"{self.base_url}/chat/completions",
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            },
+            payload=payload,
+            transport=self.transport,
+            max_attempts=self.max_attempts,
+            retry_delay_sec=self.retry_delay_sec,
+        )
+        return self.parse_chat_response(body, chosen_model)
+
+    async def edit(
+        self,
+        *,
+        source_image: LocalImageInput,
+        prompt: str,
+        model: str | None,
+        aspect_ratio: str | None,
+        image_size: str | None,
+    ) -> ProviderImage:
+        if not self.api_key:
+            raise ProviderError("OPENROUTER_API_KEY is not configured.")
+
+        chosen_model = self.normalize_model(model)
+        payload: dict[str, object] = {
+            "model": chosen_model,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": source_image.to_data_url(),
+                            },
+                        },
+                    ],
+                }
+            ],
             "modalities": ["image", "text"],
             "stream": False,
         }

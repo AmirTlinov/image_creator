@@ -7,9 +7,9 @@ Goal: expose one stable MCP tool that lets an agent send a prompt to a provider 
 ## Current status
 
 - root routing docs and skill-native memory are in place
-- real OpenRouter adapter works and writes image files to disk
+- real OpenRouter generate and edit paths work and write image files to disk
 - Gemini adapter is implemented but not live-smoked here because no `GEMINI_API_KEY` is configured
-- `generate_image` tool contract is documented
+- `generate_image` and `edit_image` contracts are documented
 
 ## Quick start
 
@@ -18,6 +18,7 @@ cp .env.example .env
 make bootstrap
 make check
 make smoke-live
+make smoke-edit-live
 ```
 
 `make check` is intentionally small but real: lint + typecheck + tests + import smoke.
@@ -32,9 +33,9 @@ make smoke-live
 
 ## First implementation slice
 
-1. live-smoked OpenRouter path is done
-2. next real follow-up is Gemini live smoke once `GEMINI_API_KEY` exists
-3. after that, decide whether `edit_image` deserves a second tool
+1. live-smoked OpenRouter generate path is done
+2. live-smoked OpenRouter edit path is done
+3. Gemini live smoke still waits on `GEMINI_API_KEY`
 
 ## Codex MCP hookup
 

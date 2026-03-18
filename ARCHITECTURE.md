@@ -35,4 +35,4 @@ Turn multiple image APIs into one stable MCP tool:
 
 1. Close Gemini live proof once `GEMINI_API_KEY` is available in this environment
 2. Optional `OpenAIProvider` follow-up if it adds real value over OpenRouter + Gemini direct
-3. Optional `edit_image` as a second tool, not as a hidden mode in `generate_image`
+3. Keep `edit_image` as a separate tool and avoid collapsing it back into hidden `generate_image` modes

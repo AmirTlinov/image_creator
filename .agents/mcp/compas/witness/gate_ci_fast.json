@@ -13,8 +13,8 @@
     "findings_v2": [],
     "suppressed": [],
     "loc": {
-      "files_scanned": 39,
-      "max_loc": 95,
+      "files_scanned": 41,
+      "max_loc": 146,
       "worst_path": "src/image_creator/providers/openrouter.py"
     },
     "boundary": null,
@@ -104,10 +104,10 @@
     "summary_md": null,
     "change_context": {
       "change_id": null,
-      "head_sha": "4f5621abd5f8fc31d395956a51136f6804b910f0",
+      "head_sha": "82c2b2bab0ce2507b28770f530c6b9bb86a1a4ad",
       "base_ref": "origin/main",
-      "base_sha": "4f5621abd5f8fc31d395956a51136f6804b910f0",
-      "merge_base_sha": "4f5621abd5f8fc31d395956a51136f6804b910f0",
+      "base_sha": "82c2b2bab0ce2507b28770f530c6b9bb86a1a4ad",
+      "merge_base_sha": "82c2b2bab0ce2507b28770f530c6b9bb86a1a4ad",
       "quality_contract_hash": "sha256:670f401c717b6699fd6028fbb3de331f315b867210fe4e992814ed2ea6622e67"
     },
     "evidence": {
@@ -133,7 +133,7 @@
       "success": true,
       "exit_code": 0,
       "timed_out": false,
-      "duration_ms": 14,
+      "duration_ms": 15,
       "command": "uv",
       "args": [
         "run",
@@ -142,11 +142,11 @@
         ".",
         "--show-files"
       ],
-      "stdout_tail": "/media/amir/documents/projects/mcp/image_creator/pyproject.toml\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/__init__.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/config.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/contracts.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/__init__.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/base.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/common.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/gemini.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/openrouter.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/server.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/service.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/smoke.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/storage.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_provider_gemini.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_provider_http.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_provider_openrouter.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_server.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_service.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_storage.py\n",
+      "stdout_tail": "/media/amir/documents/projects/mcp/image_creator/pyproject.toml\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/__init__.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/config.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/contracts.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/image_io.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/__init__.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/base.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/common.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/gemini.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/providers/openrouter.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/server.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/service.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/smoke.py\n/media/amir/documents/projects/mcp/image_creator/src/image_creator/storage.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_image_io.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_provider_gemini.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_provider_http.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_provider_openrouter.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_server.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_service.py\n/media/amir/documents/projects/mcp/image_creator/tests/test_storage.py\n",
       "stderr_tail": "",
-      "stdout_bytes": 1499,
+      "stdout_bytes": 1650,
       "stderr_bytes": 0,
-      "stdout_sha256": "4f95866f33bbd9114127eaca1f155165b27dde3c268b5c91ae1febc5a25637fe",
+      "stdout_sha256": "7c48219043aa4d9638243841843d0b54e16b2ca320b4bcb15c9645c31118f04d",
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "structured_report": null
     },
@@ -155,18 +155,18 @@
       "success": true,
       "exit_code": 0,
       "timed_out": false,
-      "duration_ms": 138,
+      "duration_ms": 120,
       "command": "uv",
       "args": [
         "run",
         "mypy",
         "src"
       ],
-      "stdout_tail": "Success: no issues found in 12 source files\n",
+      "stdout_tail": "Success: no issues found in 13 source files\n",
       "stderr_tail": "",
       "stdout_bytes": 44,
       "stderr_bytes": 0,
-      "stdout_sha256": "8b88f6d12bd312c1b024b66d07a7f7619a68482ac4d64e475759b1823199faa5",
+      "stdout_sha256": "8f3f4c0ebcb835e848682f2c6610a1bf32c86a993bdb626d9ff36e3a49408398",
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "structured_report": null
     },
@@ -175,17 +175,17 @@
       "success": true,
       "exit_code": 0,
       "timed_out": false,
-      "duration_ms": 422,
+      "duration_ms": 425,
       "command": "uv",
       "args": [
         "run",
         "pytest"
       ],
-      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.11.14, pytest-8.4.2, pluggy-1.6.0\nrootdir: /media/amir/documents/projects/mcp/image_creator\nconfigfile: pyproject.toml\ntestpaths: tests\nplugins: anyio-4.12.1\ncollected 14 items\n\ntests/test_provider_gemini.py ..                                         [ 14%]\ntests/test_provider_http.py ...                                          [ 35%]\ntests/test_provider_openrouter.py ....                                   [ 64%]\ntests/test_server.py .                                                   [ 71%]\ntests/test_service.py .                                                  [ 78%]\ntests/test_storage.py ...                                                [100%]\n\n============================== 14 passed in 0.23s ==============================\n",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.11.14, pytest-8.4.2, pluggy-1.6.0\nrootdir: /media/amir/documents/projects/mcp/image_creator\nconfigfile: pyproject.toml\ntestpaths: tests\nplugins: anyio-4.12.1\ncollected 18 items\n\ntests/test_image_io.py ..                                                [ 11%]\ntests/test_provider_gemini.py ..                                         [ 22%]\ntests/test_provider_http.py ....                                         [ 44%]\ntests/test_provider_openrouter.py ....                                   [ 66%]\ntests/test_server.py .                                                   [ 72%]\ntests/test_service.py ..                                                 [ 83%]\ntests/test_storage.py ...                                                [100%]\n\n============================== 18 passed in 0.22s ==============================\n",
       "stderr_tail": "",
-      "stdout_bytes": 848,
+      "stdout_bytes": 928,
       "stderr_bytes": 0,
-      "stdout_sha256": "d68c9c5a46b08328608fd30ed90e3814a31d71d25388f089aba88486f5df9340",
+      "stdout_sha256": "f8d8a266ee08320abebb501782286c9ac9852cca8d5b3beced3b98cafff36d6c",
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "structured_report": null
     }
@@ -194,10 +194,10 @@
   "witness": null,
   "change_context": {
     "change_id": null,
-    "head_sha": "4f5621abd5f8fc31d395956a51136f6804b910f0",
+    "head_sha": "82c2b2bab0ce2507b28770f530c6b9bb86a1a4ad",
     "base_ref": "origin/main",
-    "base_sha": "4f5621abd5f8fc31d395956a51136f6804b910f0",
-    "merge_base_sha": "4f5621abd5f8fc31d395956a51136f6804b910f0",
+    "base_sha": "82c2b2bab0ce2507b28770f530c6b9bb86a1a4ad",
+    "merge_base_sha": "82c2b2bab0ce2507b28770f530c6b9bb86a1a4ad",
     "quality_contract_hash": "sha256:670f401c717b6699fd6028fbb3de331f315b867210fe4e992814ed2ea6622e67"
   },
   "verdict": {

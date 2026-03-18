@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from mcp.server.fastmcp import FastMCP
 
-from image_creator.service import generate_image_artifact
+from image_creator.service import edit_image_artifact, generate_image_artifact
 
 
 def build_server() -> FastMCP:
@@ -20,6 +20,30 @@ def build_server() -> FastMCP:
     ) -> dict[str, str]:
         """Generate an image, save it to disk, and return a structured result with the final file path."""
         result = await generate_image_artifact(
+            prompt=prompt,
+            provider=provider,
+            model=model or None,
+            out_dir=out_dir or None,
+            aspect_ratio=aspect_ratio or None,
+            image_size=image_size or None,
+            output_name=output_name or None,
+        )
+        return result.to_dict()
+
+    @server.tool()
+    async def edit_image(
+        input_path: str,
+        prompt: str,
+        provider: str = "openrouter",
+        model: str = "",
+        out_dir: str = "",
+        aspect_ratio: str = "1:1",
+        image_size: str = "",
+        output_name: str = "",
+    ) -> dict[str, str]:
+        """Edit an existing local image, save the new image to disk, and return a structured result."""
+        result = await edit_image_artifact(
+            input_path=input_path,
             prompt=prompt,
             provider=provider,
             model=model or None,
