@@ -1,0 +1,4 @@
+interface:
+  display_name: "Image Generation"
+  short_description: "Generate and edit images with profile-first MCP"
+  default_prompt: "Use $image-generation to choose the right image profile and generate or edit a high-quality image through the local image_creator MCP server."

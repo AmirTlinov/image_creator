@@ -3,6 +3,7 @@
 ## Project-wide skills
 
 - `repo-intent` -> repo-wide mission, guardrails, and next slices
+- `skills/image-generation/SKILL.md` -> reusable visible skill package for external agents using the repo MCP surface
 
 ## Domain entrypoints
 

@@ -16,6 +16,7 @@ Bootstrap and complete the first flagship implementation of the MCP image creato
 - curated profile-first model selection exists with explicit raw model override
 - `list_image_profiles` gives the agent a cheap discovery surface
 - transparent-background generation is routed to a GPT-image profile instead of the Gemini path
+- visible distributable skill package exists under `skills/image-generation/` for external agents
 - deterministic verify commands exist
 - lint, typecheck, tests, import smoke, and ci_fast gate pass
 
@@ -51,6 +52,7 @@ Executed on 2026-03-18:
 - `codex exec ...` using `list_image_profiles` then `edit_image(profile=style_transfer, reference_images=[...])` -> pass, file written to `outputs/codex_exec/codex-style-transfer-proof.png`
 - `codex exec ...` using `generate_image(profile=transparent_bg)` -> pass, file written to `outputs/codex_exec/codex-transparent-proof.png`
 - default image model moved to `Gemini 3.1 Flash Image Preview`; current OpenRouter models API exposes `google/gemini-3.1-flash-image-preview`
+- `skills/image-generation` -> copied into the repo as a visible distributable skill and validated with `quick_validate.py`
 
 ## known_gap
 

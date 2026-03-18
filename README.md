@@ -1,18 +1,42 @@
 # image_creator
 
-AI-first repository for a thin MCP image-generation server.
+`image_creator` is a practical MCP server for agents that need to **generate or edit images and get real files on disk**, not just blobs in chat.
 
-Goal: expose one stable MCP tool that lets an agent send a prompt to a provider API and get back a file path on disk. The provider can be Gemini, OpenRouter, OpenAI, or another adapter later. The contract stays the same.
+It is built around one simple idea:
 
-## Current status
+> choose the right profile, send the prompt, save the artifact, keep iterating.
 
-- root routing docs and skill-native memory are in place
-- real OpenRouter generate and edit paths work and write image files to disk
-- transparent background generation now routes to GPT-image via OpenRouter
-- Gemini adapter is implemented but not live-smoked here because no `GEMINI_API_KEY` is configured
-- `generate_image` and `edit_image` contracts are documented
-- current default image model is `Gemini 3.1 Flash Image Preview`
-- curated image profiles exist so the agent can choose task-specific defaults without guessing raw model ids
+## What it can do
+
+- generate new images
+- edit existing local images
+- use role-tagged reference images (`style`, `object`, `character`, etc.)
+- switch between fast draft, high-fidelity, text-heavy, style-transfer, and character-consistency workflows
+- generate **transparent PNG assets** through the GPT-image path when Gemini is the wrong tool for the job
+
+## Why it is useful
+
+Most image tooling makes agents think in raw model ids and provider quirks.
+This repo gives them a cheaper mental model:
+
+- ask `list_image_profiles`
+- choose a profile like `draft`, `quality`, `edit`, `style_transfer`, `transparent_bg`
+- use `generate_image` or `edit_image`
+- get back a saved file path
+
+That keeps the surface small while still letting advanced users override `provider` and `model` when they really need to.
+
+## Profiles at a glance
+
+- `draft` — fast first-pass composition
+- `quality` — higher-fidelity final pass
+- `text_heavy` — assets with meaningful text inside
+- `edit` — narrow corrections to an existing image
+- `style_transfer` — same composition, new rendering style
+- `character_consistency` — identity-preserving variants
+- `transparent_bg` — balanced transparent-background generation
+- `transparent_bg_fast` — cheaper/faster transparent draft path
+- `cutout` — higher-fidelity isolated transparent asset path
 
 ## Quick start
 
@@ -28,28 +52,16 @@ make smoke-cutout-live
 make verify-model-catalog
 ```
 
-`make check` is intentionally small but real: lint + typecheck + tests + import smoke.
+`make check` stays intentionally compact: lint + typecheck + tests + import smoke.
 
-## Repo map
+## For agents
 
-- `AGENTS.md` — fast routing for future agents
-- `ARCHITECTURE.md` — current system map and invariants
-- `docs/contracts/generate-image.md` — tool contract
-- `docs/contracts/edit-image.md` — edit contract
-- `.agents/skills/` — repo-wide intent and routing
-- `src/image_creator/` — owning domain for server, adapters, storage
+- start with `AGENTS.md`
+- reusable distributable skill lives in `skills/image-generation/`
+- contracts live in `docs/contracts/`
+- current MCP usage examples live in `docs/usage/codex-mcp.md`
 
-## Current operating model
-
-1. agent calls `list_image_profiles` to choose `draft`, `quality`, `text_heavy`, `edit`, `character_consistency`, or `style_transfer`
-2. agent can still override `provider` and `model` explicitly for exceptional cases
-3. `reference_images` let the agent send role-tagged refs like `style`, `object`, or `character`
-4. `transparent_bg` = balanced transparent-background path
-5. `transparent_bg_fast` = cheaper/faster transparent draft path
-6. `cutout` = higher-fidelity transparent asset path
-7. Gemini live smoke still waits on `GEMINI_API_KEY`
-
-## Codex MCP hookup
+If you are wiring this into Codex locally:
 
 ```bash
 codex mcp add image_creator -- \
