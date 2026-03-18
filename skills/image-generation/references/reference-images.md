@@ -59,7 +59,9 @@ Current enforced limits:
 Stay well below the max unless the task truly needs it.
 Usually 1-3 strong references beat a large heap of weak ones.
 
-## Transparent background reminder
+        ## Transparent background reminder
 
-If the actual task is transparency / cutout, reference images are secondary.
-The first move is selecting a transparent-background profile, because that capability is model-dependent.
+        If the actual task is transparency / cutout, reference images are secondary.
+        The first move is selecting a transparent-background profile, because that capability is model-dependent.
+
+        But if the asset already exists and you just need alpha extraction, skip profiles entirely and call `remove_background`.

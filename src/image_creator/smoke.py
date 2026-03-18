@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 
+from image_creator.background_removal import remove_background_artifact
 from image_creator.service import edit_image_artifact, generate_image_artifact
 
 
@@ -21,7 +22,7 @@ def _parse_reference_images(values: list[str]) -> list[dict[str, str]]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate one real image and save it to disk.")
-    parser.add_argument("--mode", choices=["generate", "edit"], default="generate")
+    parser.add_argument("--mode", choices=["generate", "edit", "remove_bg"], default="generate")
     parser.add_argument("--provider", default="openrouter")
     parser.add_argument("--model", default="")
     parser.add_argument("--profile", default="")
@@ -36,6 +37,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-name", default="smoke-image")
     parser.add_argument("--out-dir", default="outputs/smoke")
     parser.add_argument("--input-path", default="")
+    parser.add_argument("--engine", default="u2net")
     return parser.parse_args()
 
 
@@ -58,7 +60,7 @@ async def _main() -> None:
             reference_images=reference_images,
             output_name=args.output_name or None,
         )
-    else:
+    elif args.mode == "edit":
         if not args.input_path:
             raise ValueError("--input-path is required for --mode edit")
         result = await edit_image_artifact(
@@ -76,6 +78,15 @@ async def _main() -> None:
             quality_level=args.quality_level or None,
             reference_images=reference_images,
             output_name=args.output_name or None,
+        )
+    else:
+        if not args.input_path:
+            raise ValueError("--input-path is required for --mode remove_bg")
+        result = remove_background_artifact(
+            input_path=args.input_path,
+            out_dir=args.out_dir,
+            output_name=args.output_name or None,
+            engine=args.engine or "u2net",
         )
     print(result.to_json())
 

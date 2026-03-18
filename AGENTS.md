@@ -6,6 +6,7 @@ Thin MCP server for image generation. Core contract: `generate_image` should alw
 
 - Tool contract and file-output semantics -> `docs/contracts/generate-image.md`
 - Edit tool contract -> `docs/contracts/edit-image.md`
+- Background-removal contract -> `docs/contracts/remove-background.md`
 - Image profiles and model-choice UX -> `docs/usage/codex-mcp.md`
 - Reusable distributable skill for external agents -> `skills/image-generation/SKILL.md`
 - Codex MCP hookup and local smoke -> `docs/usage/codex-mcp.md`
@@ -21,6 +22,7 @@ Thin MCP server for image generation. Core contract: `generate_image` should alw
 - `Makefile` — bootstrap / test / smoke entrypoints
 - `make smoke-transparent-live` — proof path for transparent-background generation via GPT image
 - `make smoke-transparent-fast-live` / `make smoke-cutout-live` — proof paths for fast vs premium transparent asset workflows
+- `make smoke-remove-bg-live` — proof path for deterministic cutout / alpha extraction
 
 ## Verify
 

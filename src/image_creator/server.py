@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from mcp.server.fastmcp import FastMCP
 
+from image_creator.background_removal import remove_background_artifact
 from image_creator.service import edit_image_artifact, generate_image_artifact, list_image_profiles as get_image_profiles
 
 
@@ -75,6 +76,22 @@ def build_server() -> FastMCP:
             quality_level=quality_level or None,
             reference_images=reference_images,
             output_name=output_name or None,
+        )
+        return result.to_dict()
+
+    @server.tool()
+    def remove_background(
+        input_path: str,
+        out_dir: str = "",
+        output_name: str = "",
+        engine: str = "u2net",
+    ) -> dict[str, str]:
+        """Remove the background from an existing local image and save a transparent PNG."""
+        result = remove_background_artifact(
+            input_path=input_path,
+            out_dir=out_dir or None,
+            output_name=output_name or None,
+            engine=engine,
         )
         return result.to_dict()
 

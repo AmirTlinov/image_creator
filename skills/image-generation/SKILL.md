@@ -11,7 +11,8 @@ This skill is not a rule pile. It is a compact knowledge layer for:
 - choosing the right image profile,
 - prompting efficiently,
 - using reference images correctly,
-- converging to a strong result through generate -> edit loops.
+- converging to a strong result through generate -> edit loops,
+- knowing when the right move is deterministic cutout instead of another edit prompt.
 
 ## Start here
 
@@ -20,6 +21,7 @@ Unless the user already specified an exact model or you already know the right p
 2. choose the smallest profile that fits the task
 3. use `generate_image` for first composition
 4. once composition is correct, prefer `edit_image` for narrow changes
+5. if the image is already correct and only the background must go away, prefer `remove_background`
 
 Default bias:
 - first pass -> `draft`
@@ -97,6 +99,17 @@ prefer one of these:
 - `transparent_bg_fast` for cheap drafts
 - `cutout` for higher-fidelity final isolated assets
 
+### 6. Use `remove_background` for existing assets
+
+If the subject is already correct and the real task is:
+- remove background
+- cut out object
+- extract alpha
+
+do not push that through `edit_image`.
+
+Use `remove_background`.
+
 ## Common traps
 
 - jumping straight to raw model ids when a profile already fits
@@ -106,4 +119,5 @@ prefer one of these:
 - using `quality` too early, before composition is proven
 - using `draft` for text-heavy final assets
 - trying to get a real transparent background from Gemini-family image routes
+- trying to do deterministic cutout through `edit_image` when `remove_background` is the real primitive
 - forgetting that the deliverable is the saved file path, not just the model response

@@ -10,6 +10,7 @@ It is built around one simple idea:
 
 - generate new images
 - edit existing local images
+- remove the background from an existing local image through a deterministic cutout path
 - use role-tagged reference images (`style`, `object`, `character`, etc.)
 - switch between fast draft, high-fidelity, text-heavy, style-transfer, and character-consistency workflows
 - generate **transparent PNG assets** through the GPT-image path when Gemini is the wrong tool for the job
@@ -22,6 +23,7 @@ This repo gives them a cheaper mental model:
 - ask `list_image_profiles`
 - choose a profile like `draft`, `quality`, `edit`, `style_transfer`, `transparent_bg`
 - use `generate_image` or `edit_image`
+- use `remove_background` when the task is actually cutout / alpha extraction
 - get back a saved file path
 
 That keeps the surface small while still letting advanced users override `provider` and `model` when they really need to.
@@ -37,6 +39,7 @@ That keeps the surface small while still letting advanced users override `provid
 - `transparent_bg` — balanced transparent-background generation
 - `transparent_bg_fast` — cheaper/faster transparent draft path
 - `cutout` — higher-fidelity isolated transparent asset path
+- `remove_background` — deterministic background removal for an already existing image
 
 ## Quick start
 
@@ -49,6 +52,7 @@ make smoke-edit-live
 make smoke-transparent-live
 make smoke-transparent-fast-live
 make smoke-cutout-live
+make smoke-remove-bg-live
 make verify-model-catalog
 ```
 

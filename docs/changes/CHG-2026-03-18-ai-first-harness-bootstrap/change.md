@@ -12,11 +12,13 @@ Bootstrap and complete the first flagship implementation of the MCP image creato
 - root routing docs exist
 - root and domain-local skill registries exist
 - `generate_image` and `edit_image` contracts are written down as canonical repo truth
+- `remove_background` contract is written down as canonical repo truth
 - OpenRouter generate and edit paths are implemented and live-proven
 - curated profile-first model selection exists with explicit raw model override
 - `list_image_profiles` gives the agent a cheap discovery surface
 - transparent-background generation is routed to a GPT-image profile instead of the Gemini path
 - visible distributable skill package exists under `skills/image-generation/` for external agents
+- deterministic background removal exists as a separate tool instead of being forced through `edit_image`
 - deterministic verify commands exist
 - lint, typecheck, tests, import smoke, and ci_fast gate pass
 
@@ -42,6 +44,8 @@ Executed on 2026-03-18:
 - `make smoke-transparent-live` -> pass via OpenRouter GPT-image route, file written to `outputs/transparent_proofs/smoke-transparent-proof.png` and detected as `RGBA`
 - `make smoke-transparent-fast-live` -> pass via OpenRouter GPT-image-mini route, file written to `outputs/transparent_proofs/smoke-transparent-fast-proof.png` and detected as `RGBA`
 - `make smoke-cutout-live` -> pass via OpenRouter GPT-image route, file written to `outputs/transparent_proofs/smoke-cutout-proof.png` and detected as `RGBA`
+- `make smoke-remove-bg-live` -> pass via local `rembg:u2net` route, file written to `outputs/remove_bg_result/smoke-remove-bg-proof.png` and detected as `RGBA`
+- `make smoke-remove-bg-live` -> pass via local `rembg:u2net` route, file written to `outputs/remove_bg_result/smoke-remove-bg-proof.png` and detected as `RGBA`
 - `compas validate mode=ratchet` -> pass
 - `compas gate kind=ci_fast` -> pass
 - `codex mcp add image_creator` + `codex mcp list` + `codex mcp get image_creator` -> pass

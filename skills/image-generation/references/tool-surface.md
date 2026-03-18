@@ -45,7 +45,7 @@ Returns a structured object:
 - `model`
 - `profile`
 
-## Editing
+        ## Editing
 
 ### `edit_image`
 
@@ -54,7 +54,26 @@ Same shape as `generate_image`, plus:
 
 Important:
 - `input_path` is the thing you edit
-- `reference_images` are not extra editable bases
+        - `reference_images` are not extra editable bases
+
+        ## Deterministic cutout
+
+        ### `remove_background`
+
+        Use when the image already exists and the task is alpha extraction / cutout.
+
+        Inputs:
+        - `input_path`
+        - `out_dir`
+        - `output_name`
+        - `engine`
+
+        Returns:
+        - `path`
+        - `mime_type`
+        - `provider=local`
+        - `model=rembg:<engine>`
+        - `profile=remove_background`
 
 ## Practical defaults
 
@@ -63,14 +82,20 @@ Important:
 - current higher-fidelity quality profile = `google/gemini-3-pro-image-preview`
 - current balanced transparent-background profile = `openai/gpt-5-image`
 - current fast transparent-background profile = `openai/gpt-5-image-mini`
-- current premium cutout profile = `openai/gpt-5-image`
-- Gemini direct code path exists, but is not live-proven in this environment until `GEMINI_API_KEY` exists
+        - current premium cutout profile = `openai/gpt-5-image`
+        - Gemini direct code path exists, but is not live-proven in this environment until `GEMINI_API_KEY` exists
 
-## Transparent background rule
+        ## Transparent background rule
 
 In the current repo truth:
-- Gemini-family image routes are not the transparent-background path
-- transparent background / alpha channel / cutout tasks should use `transparent_bg`, `transparent_bg_fast`, or `cutout`
+        - Gemini-family image routes are not the transparent-background path
+        - transparent background / alpha channel / cutout tasks should use `transparent_bg`, `transparent_bg_fast`, or `cutout`
+
+        ## Existing image cutout rule
+
+        If the user already has the right image and only needs the background removed:
+        - do not use `edit_image`
+        - use `remove_background`
 
 ## Output contract
 

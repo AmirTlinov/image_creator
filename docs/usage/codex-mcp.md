@@ -26,6 +26,7 @@ make smoke-edit-live
 make smoke-transparent-live
 make smoke-transparent-fast-live
 make smoke-cutout-live
+make smoke-remove-bg-live
 make verify-model-catalog
 ```
 
@@ -106,6 +107,18 @@ Example edit call:
 }
 ```
 
+Deterministic background removal from an existing asset:
+
+```json
+{
+  "input_path": "outputs/source.jpg",
+  "out_dir": "outputs/cutouts",
+  "output_name": "source-cutout"
+}
+```
+
+Tool: `remove_background`
+
 Reference-aware style transfer:
 
 ```json
@@ -128,6 +141,7 @@ Reference-aware style transfer:
 - `transparent_bg_fast` intentionally routes to `openai/gpt-5-image-mini`.
 - `cutout` intentionally routes to `openai/gpt-5-image` with a quality-biased default.
 - In the current repo truth, Gemini-family image paths do not support true transparent-background generation.
+- For an existing image that already has the right subject but the wrong background, use `remove_background` instead of `edit_image`.
 - Old preview aliases like `google/gemini-2.5-flash-image-preview` are normalized to the working stable model.
 - Profiles are the preferred default; explicit `model` override is for exceptional cases.
 - `make check` runs lint + typecheck + tests + import smoke without adding a heavy CI layer.

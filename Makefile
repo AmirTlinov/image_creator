@@ -43,6 +43,20 @@ smoke-cutout-live:
 		--out-dir outputs/transparent_proofs
 	file outputs/transparent_proofs/smoke-cutout-proof.png
 
+smoke-remove-bg-live:
+	uv run python -m image_creator.smoke \
+		--mode generate \
+		--profile draft \
+		--prompt "Clean product shot of a single red sneaker on a soft light gray studio background, centered, full object visible, realistic lighting, no text, no watermark." \
+		--output-name smoke-remove-bg-source \
+		--out-dir outputs/remove_bg_source >/dev/null
+	uv run python -m image_creator.smoke \
+		--mode remove_bg \
+		--input-path outputs/remove_bg_source/smoke-remove-bg-source.jpg \
+		--output-name smoke-remove-bg-proof \
+		--out-dir outputs/remove_bg_result
+	file outputs/remove_bg_result/smoke-remove-bg-proof.png
+
 verify-model-catalog:
 	uv run python -m image_creator.verify_model_catalog
 

@@ -18,6 +18,8 @@ Turn multiple image APIs into one stable MCP tool:
   - owns curated model-selection profiles and provider/model compatibility checks
 - `src/image_creator/prompting.py`
   - owns deterministic prompt assembly for reference images and negative constraints
+- `src/image_creator/background_removal.py`
+  - owns deterministic cutout / alpha extraction for existing local images
 - `src/image_creator/storage.py`
   - owns file naming, extension mapping, safe write-to-disk behavior
 - `src/image_creator/contracts.py`
@@ -33,8 +35,9 @@ Turn multiple image APIs into one stable MCP tool:
 4. The tools return absolute paths, not only base64 or transient URLs.
 5. File writes are centralized in `storage.py` and must allocate collision-safe sibling names instead of overwriting by default.
 6. Provider HTTP retries and timeout handling stay inside `providers/common.py`.
-7. `generate_image` and `edit_image` stay separate tools; `edit_image` owns the editable base image semantics.
+7. `generate_image`, `edit_image`, and `remove_background` stay separate tools with different responsibilities.
 8. Transparent background generation is a GPT-image-only path in the current repo truth; Gemini-family image paths must fail early for this request instead of silently producing opaque images.
+9. Background removal from an existing asset is a deterministic local cutout job, not a semantic edit job.
 
 ## Planned slices
 
