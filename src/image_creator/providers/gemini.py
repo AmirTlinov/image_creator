@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import base64
+from collections.abc import Sequence
 
 import httpx
 
 from image_creator.contracts import ProviderImage
-from image_creator.image_io import LocalImageInput
+from image_creator.image_io import LocalImageInput, ReferenceImageInput
+from image_creator.prompting import compose_image_instruction
 from image_creator.providers.common import ProviderError, post_json_with_retries, summarize_json
 
 
@@ -70,6 +72,8 @@ class GeminiProvider:
         model: str | None,
         aspect_ratio: str | None,
         image_size: str | None,
+        negative_prompt: str | None = None,
+        reference_images: Sequence[ReferenceImageInput] = (),
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("GEMINI_API_KEY is not configured.")
@@ -85,8 +89,20 @@ class GeminiProvider:
         if image_config:
             generation_config["imageConfig"] = image_config
 
+        parts: list[dict[str, object]] = [
+            {
+                "text": compose_image_instruction(
+                    prompt=prompt,
+                    negative_prompt=negative_prompt,
+                    reference_images=reference_images,
+                    include_editable_base_image=False,
+                )
+            }
+        ]
+        parts.extend({"inline_data": reference_image.to_gemini_inline_data()} for reference_image in reference_images)
+
         payload: dict[str, object] = {
-            "contents": [{"parts": [{"text": prompt}]}],
+            "contents": [{"parts": parts}],
             "generationConfig": generation_config,
         }
 
@@ -111,6 +127,8 @@ class GeminiProvider:
         model: str | None,
         aspect_ratio: str | None,
         image_size: str | None,
+        negative_prompt: str | None = None,
+        reference_images: Sequence[ReferenceImageInput] = (),
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("GEMINI_API_KEY is not configured.")
@@ -126,13 +144,23 @@ class GeminiProvider:
         if image_config:
             generation_config["imageConfig"] = image_config
 
+        parts: list[dict[str, object]] = [
+            {
+                "text": compose_image_instruction(
+                    prompt=prompt,
+                    negative_prompt=negative_prompt,
+                    reference_images=reference_images,
+                    include_editable_base_image=True,
+                )
+            },
+            {"inline_data": source_image.to_gemini_inline_data()},
+        ]
+        parts.extend({"inline_data": reference_image.to_gemini_inline_data()} for reference_image in reference_images)
+
         payload: dict[str, object] = {
             "contents": [
                 {
-                    "parts": [
-                        {"text": prompt},
-                        {"inline_data": source_image.to_gemini_inline_data()},
-                    ]
+                    "parts": parts
                 }
             ],
             "generationConfig": generation_config,

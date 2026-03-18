@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import Protocol
 
 from image_creator.contracts import ProviderImage
-from image_creator.image_io import LocalImageInput
+from image_creator.image_io import LocalImageInput, ReferenceImageInput
 
 
 class ImageProvider(Protocol):
@@ -17,6 +18,8 @@ class ImageProvider(Protocol):
         model: str | None,
         aspect_ratio: str | None,
         image_size: str | None,
+        negative_prompt: str | None = None,
+        reference_images: Sequence[ReferenceImageInput] = (),
     ) -> ProviderImage:
         ...
 
@@ -28,5 +31,7 @@ class ImageProvider(Protocol):
         model: str | None,
         aspect_ratio: str | None,
         image_size: str | None,
+        negative_prompt: str | None = None,
+        reference_images: Sequence[ReferenceImageInput] = (),
     ) -> ProviderImage:
         ...

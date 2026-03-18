@@ -2,10 +2,16 @@ from __future__ import annotations
 
 import base64
 import mimetypes
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
 from image_creator.config import Settings
+
+VALID_REFERENCE_ROLES = frozenset({"style", "subject", "object", "character", "layout"})
+MAX_TOTAL_REFERENCE_IMAGES = 14
+MAX_CHARACTER_REFERENCES = 4
+MAX_NON_CHARACTER_REFERENCES = 10
 
 
 @dataclass(frozen=True)
@@ -24,6 +30,18 @@ class LocalImageInput:
             "mime_type": self.mime_type,
             "data": encoded,
         }
+
+
+@dataclass(frozen=True)
+class ReferenceImageInput:
+    image: LocalImageInput
+    role: str
+
+    def to_data_url(self) -> str:
+        return self.image.to_data_url()
+
+    def to_gemini_inline_data(self) -> dict[str, str]:
+        return self.image.to_gemini_inline_data()
 
 
 def resolve_repo_path(path_value: str, settings: Settings) -> Path:
@@ -49,3 +67,49 @@ def load_local_image(path_value: str, settings: Settings) -> LocalImageInput:
         mime_type=mime_type,
         data=path.read_bytes(),
     )
+
+
+def load_reference_images(
+    reference_images: Sequence[Mapping[str, str]] | None,
+    settings: Settings,
+) -> list[ReferenceImageInput]:
+    if not reference_images:
+        return []
+
+    loaded: list[ReferenceImageInput] = []
+    character_count = 0
+    non_character_count = 0
+
+    for raw_reference in reference_images:
+        path_value = raw_reference.get("path", "").strip()
+        role = raw_reference.get("role", "").strip().lower()
+
+        if not path_value:
+            raise ValueError("Each reference image must include a non-empty 'path'.")
+        if role not in VALID_REFERENCE_ROLES:
+            supported = ", ".join(sorted(VALID_REFERENCE_ROLES))
+            raise ValueError(
+                f"Unsupported reference image role '{raw_reference.get('role', '')}'. Expected one of: {supported}."
+            )
+
+        if role == "character":
+            character_count += 1
+        else:
+            non_character_count += 1
+
+        loaded.append(ReferenceImageInput(image=load_local_image(path_value, settings), role=role))
+
+    if len(loaded) > MAX_TOTAL_REFERENCE_IMAGES:
+        raise ValueError(
+            f"Too many reference images: {len(loaded)}. Current Gemini-family limit is {MAX_TOTAL_REFERENCE_IMAGES}."
+        )
+    if character_count > MAX_CHARACTER_REFERENCES:
+        raise ValueError(
+            f"Too many character references: {character_count}. Current Gemini-family limit is {MAX_CHARACTER_REFERENCES}."
+        )
+    if non_character_count > MAX_NON_CHARACTER_REFERENCES:
+        raise ValueError(
+            f"Too many non-character references: {non_character_count}. Current Gemini-family limit is {MAX_NON_CHARACTER_REFERENCES}."
+        )
+
+    return loaded

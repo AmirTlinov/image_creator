@@ -11,6 +11,7 @@ Goal: expose one stable MCP tool that lets an agent send a prompt to a provider 
 - Gemini adapter is implemented but not live-smoked here because no `GEMINI_API_KEY` is configured
 - `generate_image` and `edit_image` contracts are documented
 - current default image model is `Gemini 3.1 Flash Image Preview`
+- curated image profiles exist so the agent can choose task-specific defaults without guessing raw model ids
 
 ## Quick start
 
@@ -20,6 +21,7 @@ make bootstrap
 make check
 make smoke-live
 make smoke-edit-live
+make verify-model-catalog
 ```
 
 `make check` is intentionally small but real: lint + typecheck + tests + import smoke.
@@ -29,14 +31,16 @@ make smoke-edit-live
 - `AGENTS.md` — fast routing for future agents
 - `ARCHITECTURE.md` — current system map and invariants
 - `docs/contracts/generate-image.md` — tool contract
+- `docs/contracts/edit-image.md` — edit contract
 - `.agents/skills/` — repo-wide intent and routing
 - `src/image_creator/` — owning domain for server, adapters, storage
 
-## First implementation slice
+## Current operating model
 
-1. live-smoked OpenRouter generate path is done
-2. live-smoked OpenRouter edit path is done
-3. Gemini live smoke still waits on `GEMINI_API_KEY`
+1. agent calls `list_image_profiles` to choose `draft`, `quality`, `text_heavy`, `edit`, `character_consistency`, or `style_transfer`
+2. agent can still override `provider` and `model` explicitly for exceptional cases
+3. `reference_images` let the agent send role-tagged refs like `style`, `object`, or `character`
+4. Gemini live smoke still waits on `GEMINI_API_KEY`
 
 ## Codex MCP hookup
 

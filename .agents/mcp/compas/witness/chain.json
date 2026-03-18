@@ -47,6 +47,14 @@
       "prev_hash": "a157a0dd8ac34fd6d98ffe346031c5fbc4a9f2d253471d11349f9fdf39b06214",
       "entry_hash": "c8ed09e55390a5009089b45ffa68f02a6051fc4871621a021c53c979de113f0b",
       "ok": true
+    },
+    {
+      "gate_kind": "ci_fast",
+      "timestamp": "2026-03-18T01:00:18.965778361+00:00",
+      "witness_sha256": "351f742a52a9b25ac7fb3586c633a2ba850777a01dec2ec31020d2f7c6dba203",
+      "prev_hash": "c8ed09e55390a5009089b45ffa68f02a6051fc4871621a021c53c979de113f0b",
+      "entry_hash": "8457576482183d476a11293fc104b85173dad4de00ffe4d97bfe228144d58d3a",
+      "ok": true
     }
   ]
 }

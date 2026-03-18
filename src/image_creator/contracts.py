@@ -17,6 +17,7 @@ class GeneratedImageResult:
     mime_type: str
     provider: str
     model: str
+    profile: str = ""
 
     def to_dict(self) -> dict[str, str]:
         return asdict(self)

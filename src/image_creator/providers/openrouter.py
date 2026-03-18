@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 import httpx
 
 from image_creator.contracts import ProviderImage
-from image_creator.image_io import LocalImageInput
+from image_creator.image_io import LocalImageInput, ReferenceImageInput
+from image_creator.prompting import compose_image_instruction
 from image_creator.providers.common import (
     ProviderError,
     decode_data_url,
@@ -77,14 +80,36 @@ class OpenRouterProvider:
         model: str | None,
         aspect_ratio: str | None,
         image_size: str | None,
+        negative_prompt: str | None = None,
+        reference_images: Sequence[ReferenceImageInput] = (),
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("OPENROUTER_API_KEY is not configured.")
 
         chosen_model = self.normalize_model(model)
+        composed_prompt = compose_image_instruction(
+            prompt=prompt,
+            negative_prompt=negative_prompt,
+            reference_images=reference_images,
+            include_editable_base_image=False,
+        )
+
+        if reference_images:
+            content_parts: list[dict[str, object]] = [{"type": "text", "text": composed_prompt}]
+            content_parts.extend(
+                {
+                    "type": "image_url",
+                    "image_url": {"url": reference_image.to_data_url()},
+                }
+                for reference_image in reference_images
+            )
+            content: str | list[dict[str, object]] = content_parts
+        else:
+            content = composed_prompt
+
         payload: dict[str, object] = {
             "model": chosen_model,
-            "messages": [{"role": "user", "content": prompt}],
+            "messages": [{"role": "user", "content": content}],
             "modalities": ["image", "text"],
             "stream": False,
         }
@@ -118,25 +143,45 @@ class OpenRouterProvider:
         model: str | None,
         aspect_ratio: str | None,
         image_size: str | None,
+        negative_prompt: str | None = None,
+        reference_images: Sequence[ReferenceImageInput] = (),
     ) -> ProviderImage:
         if not self.api_key:
             raise ProviderError("OPENROUTER_API_KEY is not configured.")
 
         chosen_model = self.normalize_model(model)
+        content: list[dict[str, object]] = [
+            {
+                "type": "text",
+                "text": compose_image_instruction(
+                    prompt=prompt,
+                    negative_prompt=negative_prompt,
+                    reference_images=reference_images,
+                    include_editable_base_image=True,
+                ),
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": source_image.to_data_url(),
+                },
+            },
+        ]
+        content.extend(
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": reference_image.to_data_url(),
+                },
+            }
+            for reference_image in reference_images
+        )
         payload: dict[str, object] = {
             "model": chosen_model,
             "messages": [
                 {
                     "role": "user",
-                    "content": [
-                        {"type": "text", "text": prompt},
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": source_image.to_data_url(),
-                            },
-                        },
-                    ],
+                    "content": content,
                 }
             ],
             "modalities": ["image", "text"],

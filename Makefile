@@ -16,6 +16,9 @@ smoke:
 smoke-live:
 	uv run python -m image_creator.smoke
 
+verify-model-catalog:
+	uv run python -m image_creator.verify_model_catalog
+
 smoke-edit-live:
 	uv run python -m image_creator.smoke \
 		--mode generate \

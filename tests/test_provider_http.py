@@ -151,3 +151,135 @@ async def test_openrouter_edit_sends_input_image_as_data_url() -> None:
     )
 
     assert result.data == b"edited"
+
+
+@pytest.mark.anyio
+async def test_openrouter_generate_sends_reference_images_after_text_part() -> None:
+    encoded = base64.b64encode(b"png-bytes").decode()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.content.decode())
+        content = payload["messages"][0]["content"]
+        assert content[0]["type"] == "text"
+        assert "Reference images:" in content[0]["text"]
+        assert content[1]["type"] == "image_url"
+        assert content[2]["type"] == "image_url"
+        return httpx.Response(
+            200,
+            json={
+                "choices": [
+                    {
+                        "message": {
+                            "images": [
+                                {
+                                    "image_url": {
+                                        "url": f"data:image/png;base64,{encoded}",
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+        )
+
+    from image_creator.image_io import ReferenceImageInput, LocalImageInput
+
+    provider = OpenRouterProvider(
+        api_key="test-key",
+        transport=httpx.MockTransport(handler),
+        retry_delay_sec=0.0,
+    )
+
+    result = await provider.generate(
+        prompt="restyle this",
+        model=None,
+        aspect_ratio="1:1",
+        image_size=None,
+        negative_prompt="no watermark",
+        reference_images=[
+            ReferenceImageInput(
+                image=LocalImageInput(
+                    path=__import__("pathlib").Path("/tmp/style.png"),
+                    mime_type="image/png",
+                    data=b"style-image",
+                ),
+                role="style",
+            ),
+            ReferenceImageInput(
+                image=LocalImageInput(
+                    path=__import__("pathlib").Path("/tmp/object.png"),
+                    mime_type="image/png",
+                    data=b"object-image",
+                ),
+                role="object",
+            ),
+        ],
+    )
+
+    assert result.data == b"png-bytes"
+
+
+@pytest.mark.anyio
+async def test_gemini_edit_sends_text_base_then_references() -> None:
+    encoded = base64.b64encode(b"edited").decode()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.content.decode())
+        parts = payload["contents"][0]["parts"]
+        assert "Editable base image" in parts[0]["text"]
+        assert "Reference images:" in parts[0]["text"]
+        assert "inline_data" in parts[1]
+        assert "inline_data" in parts[2]
+        return httpx.Response(
+            200,
+            json={
+                "candidates": [
+                    {
+                        "content": {
+                            "parts": [
+                                {
+                                    "inlineData": {
+                                        "mimeType": "image/png",
+                                        "data": encoded,
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+        )
+
+    from image_creator.image_io import ReferenceImageInput, LocalImageInput
+
+    provider = GeminiProvider(
+        api_key="test-key",
+        transport=httpx.MockTransport(handler),
+        retry_delay_sec=0.0,
+    )
+
+    result = await provider.edit(
+        source_image=LocalImageInput(
+            path=__import__("pathlib").Path("/tmp/base.png"),
+            mime_type="image/png",
+            data=b"base-image",
+        ),
+        prompt="add glasses",
+        model=None,
+        aspect_ratio="1:1",
+        image_size=None,
+        negative_prompt="no text",
+        reference_images=[
+            ReferenceImageInput(
+                image=LocalImageInput(
+                    path=__import__("pathlib").Path("/tmp/style.png"),
+                    mime_type="image/png",
+                    data=b"style-image",
+                ),
+                role="style",
+            )
+        ],
+    )
+
+    assert result.data == b"edited"
