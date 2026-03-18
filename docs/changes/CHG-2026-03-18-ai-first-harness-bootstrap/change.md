@@ -47,6 +47,7 @@ Executed on 2026-03-18:
 - `uv run python -m image_creator.smoke --profile quality ...` -> pass, file written to `outputs/profile_proofs/profile-quality-proof.jpg`
 - `uv run python -m image_creator.smoke --mode edit --profile style_transfer --reference-image style:...` -> pass, file written to `outputs/profile_proofs/style-transfer-proof.png`
 - `codex exec ...` using `list_image_profiles` then `edit_image(profile=style_transfer, reference_images=[...])` -> pass, file written to `outputs/codex_exec/codex-style-transfer-proof.png`
+- `codex exec ...` using `generate_image(profile=transparent_bg)` -> pass, file written to `outputs/codex_exec/codex-transparent-proof.png`
 - default image model moved to `Gemini 3.1 Flash Image Preview`; current OpenRouter models API exposes `google/gemini-3.1-flash-image-preview`
 
 ## known_gap
